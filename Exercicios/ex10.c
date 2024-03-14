@@ -4,6 +4,9 @@
 int main(){
     int qtd = 15;
     int v[qtd],atual;
+    for(int i = 0; i < qtd; i++){
+        scanf("%d",&v[qtd]);
+    }
     
     for(int i = 1; i < qtd; i++){
         atual = v[i];
@@ -14,7 +17,10 @@ int main(){
         } 
         v[j+1] = atual;
     }
-
-
+    
+    for(int i = 0; i < qtd; i++){
+        printf("%d\n",v[i]);
+    }
+    
     return 0;
 }

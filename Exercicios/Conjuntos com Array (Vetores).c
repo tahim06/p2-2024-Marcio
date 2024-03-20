@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 
 int main(){
     
@@ -8,7 +9,7 @@ int main(){
     scanf("%d",&size1);
     
     printf("Digite o tamanho do 2º Vetor: ");
-    scanf("%d",&size1);
+    scanf("%d",&size2);
 
     int vetor1[size1], vetor2[size2];
 
@@ -49,8 +50,36 @@ int main(){
         }
         
     }
+
+    int sizeUniao = size1 + size2;
     
+    int vetorUniao[sizeUniao];
 
+    for(int i = 0; i < sizeUniao; i++){
+        
+        if(i != 0 && i < ceil(sizeUniao/2)){
+            vetorUniao[i] = vetor1[i];   
+        }
 
+        if(i != 0 && i >= ceil(sizeUniao/2)) {
+            for(int j = 0; j < ceil(sizeUniao/2); j++){
+                if(vetorUniao[j] == vetor2[i]){
+                    continue;
+               
+                }
+                if(j == ){
+                    
+                }
+   
+            }
+
+        }else{
+            vetorUniao[i] = vetor1[i];
+        }
+        
+    }
+    
     return 0;
 }
+
+

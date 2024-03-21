@@ -96,13 +96,15 @@ int main(){
     int tamRealSomente_A = 0;
     
     for(int i = 0; i < size1; i++){
-        int igual = 1;
+        int presente = 0;
         for(int j = 0; j < size2; j++) {
-            if(vetor1[i] != vetor2[j]) {
-                vetorSomente_A[tamRealSomente_A++] = vetor1[i];
-                igual = 0;
+            if(vetor1[i] == vetor2[j]) {
+                presente = 1;
                 break;  
             }
+        }
+        if(presente = 0){
+            vetorSomente_A[tamRealSomente_A++] = vetor1[i];
         }
         
     }
@@ -112,13 +114,15 @@ int main(){
     int tamRealSomente_B = 0;
     
     for(int i = 0; i < size2; i++){
-        int igual = 1;
+        int presente = 0;
         for(int j = 0; j < size1; j++) {
-            if(vetor2[i] != vetor1[j]) {
-                vetorSomente_B[tamRealSomente_B++] = vetor2[i];
-                igual = 0;
+            if(vetor2[i] == vetor1[j]) {
+                presente = 1;
                 break;  
             }
+        }
+        if(presente = 0){
+            vetorSomente_A[tamRealSomente_A++] = vetor2[i];
         }
         
     }
@@ -142,7 +146,7 @@ int main(){
        }else{
             printf(", %d",vetorIntersecao[i]);
        }
-    }printf("]");
+    }printf("]\n");
 
     //Print do Vetor de A - B
     for(int i = 0; i < tamRealSomente_A; i++){
@@ -152,7 +156,7 @@ int main(){
        }else{
             printf(", %d",vetorSomente_A[i]);
        }
-    }printf("]");
+    }printf("]\n");
     
     //Print do Vetor de B - A
     for(int i = 0; i < tamRealSomente_B; i++){

@@ -8,9 +8,11 @@ int main(){
     //pega o tam dos vetores 
     printf("Digite o tamanho do 1º Vetor: ");
     scanf("%d",&size1);
-    
+    printf("\n");
+
     printf("Digite o tamanho do 2º Vetor: ");
     scanf("%d",&size2);
+    printf("\n");
 
     int vetor1[size1], vetor2[size2];
 

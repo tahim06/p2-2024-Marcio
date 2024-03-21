@@ -126,7 +126,27 @@ int main(){
         }
         
     }
-       
+
+
+    //print Originais
+    for(int i = 0; i < size1; i++){
+       if(i == 0){
+            printf("Vetor 1 = [");
+            printf("%d",vetor1[i]);
+       }else{
+            printf(", %d",vetor1[i]);
+       }
+    }printf("]\n");
+
+    //print do vetorUniao
+    for(int i = 0; i < size2; i++){
+       if(i == 0){
+            printf("Vetor 2 = [");
+            printf("%d",vetor2[i]);
+       }else{
+            printf(", %d",vetor2[i]);
+       }
+    }printf("]\n");
    
    //print do vetorUniao
     for(int i = 0; i < tamRealUniao; i++){

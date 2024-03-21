@@ -82,7 +82,6 @@ int main(){
     int vetorIntersecao[sizeUniao];
     int tamRealIntersecao = 0;
 
-   
     for(int i = 0; i < size1; i++) {
         for(int j = 0; j < size2; j++) {
             if(vetor1[i] == vetor2[j]) {
@@ -91,12 +90,44 @@ int main(){
             }
         }
     }
+
+    //Diferença Conjunto A - B
+    int vetorSomente_A[sizeUniao];
+    int tamRealSomente_A = 0;
+    
+    for(int i = 0; i < size1; i++){
+        int igual = 1;
+        for(int j = 0; j < size2; j++) {
+            if(vetor1[i] != vetor2[j]) {
+                vetorSomente_A[tamRealSomente_A++] = vetor1[i];
+                igual = 0;
+                break;  
+            }
+        }
+        
+    }
+
+    //Diferença Conjunto B - A
+    int vetorSomente_B[sizeUniao];
+    int tamRealSomente_B = 0;
+    
+    for(int i = 0; i < size2; i++){
+        int igual = 1;
+        for(int j = 0; j < size1; j++) {
+            if(vetor2[i] != vetor1[j]) {
+                vetorSomente_B[tamRealSomente_B++] = vetor2[i];
+                igual = 0;
+                break;  
+            }
+        }
+        
+    }
        
    
    //print do vetorUniao
     for(int i = 0; i < tamRealUniao; i++){
        if(i == 0){
-            printf("[");
+            printf("União = [");
             printf("%d",vetorUniao[i]);
        }else{
             printf(", %d",vetorUniao[i]);
@@ -106,16 +137,34 @@ int main(){
     //Print do vetorIntersecao
     for(int i = 0; i < tamRealIntersecao; i++){
        if(i == 0){
-            printf("[");
+            printf("Interseção = [");
             printf("%d",vetorIntersecao[i]);
        }else{
             printf(", %d",vetorIntersecao[i]);
        }
     }printf("]");
+
+    //Print do Vetor de A - B
+    for(int i = 0; i < tamRealSomente_A; i++){
+       if(i == 0){
+            printf("A - B = [");
+            printf("%d",vetorSomente_A[i]);
+       }else{
+            printf(", %d",vetorSomente_A[i]);
+       }
+    }printf("]");
     
+    //Print do Vetor de B - A
+    for(int i = 0; i < tamRealSomente_B; i++){
+       if(i == 0){
+            printf("B - A = [");
+            printf("%d",vetorSomente_B[i]);
+       }else{
+            printf(", %d",vetorSomente_B[i]);
+       }
+    }printf("]");
+
     printf("\n");
 
     return 0;
 }
-
-

@@ -74,7 +74,8 @@ int main(){
             }
         }
         if(repetido == 0){
-            vetorUniao[tamRealUniao++] = vetor2[i];
+            vetorUniao[tamRealUniao] = vetor2[i];
+            tamRealUniao += 1;
         }
     }
    
@@ -85,7 +86,8 @@ int main(){
     for(int i = 0; i < size1; i++) {
         for(int j = 0; j < size2; j++) {
             if(vetor1[i] == vetor2[j]) {
-                vetorIntersecao[tamRealIntersecao++] = vetor1[i];
+                vetorIntersecao[tamRealIntersecao] = vetor1[i];
+                tamRealIntersecao += 1;
                 break;  
             }
         }
@@ -104,7 +106,8 @@ int main(){
             }
         }
         if(presente == 0){
-            vetorSomente_A[tamRealSomente_A++] = vetor1[i];
+            vetorSomente_A[tamRealSomente_A] = vetor1[i];
+            tamRealSomente_A += 1;
         }
         
     }
@@ -122,7 +125,8 @@ int main(){
             }
         }
         if(presente == 0){
-            vetorSomente_B[tamRealSomente_B++] = vetor2[i];
+            vetorSomente_B[tamRealSomente_B] = vetor2[i];
+            tamRealSomente_B;
         }
         
     }

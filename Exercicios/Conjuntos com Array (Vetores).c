@@ -56,36 +56,65 @@ int main(){
 
     int sizeUniao = size1 + size2;
     
-    int vetorUniao[sizeUniao];
-    int tamReal = 0;
-
     //Cria a União dos dois Vetores anteriores
+    int vetorUniao[sizeUniao];
+    int tamRealUniao = 0;
+
     for(int i = 0; i < size1; i++){
         vetorUniao[i] = vetor1[i];  
-        tamReal += 1;
+        tamRealUniao += 1;
     }
     
     for(int i = 0; i < size2; i++){
         int repetido = 0;
         for(int j = 0; j < size1; j++){
-            if (vetor2[i] == vetor1[j]){
+            if(vetor2[i] == vetor1[j]){
                 repetido = 1;
                 break;
             }
         }
         if(repetido == 0){
-            vetorUniao[tamReal++] = vetor2[i];
+            vetorUniao[tamRealUniao++] = vetor2[i];
         }
     }
-    for(int i = 0; i < tamReal; i++){
+   
+    //interseção dos dois conjuntos
+    int vetorIntersecao[sizeUniao];
+    int tamRealIntersecao = 0;
+
+   
+    for(int i = 0; i < size1; i++) {
+        for(int j = 0; j < size2; j++) {
+            if(vetor1[i] == vetor2[j]) {
+                vetorIntersecao[tamRealIntersecao++] = vetor1[i];
+                break;  
+            }
+        }
+    }
+       
+   
+   //print do vetorUniao
+    for(int i = 0; i < tamRealUniao; i++){
        if(i == 0){
             printf("[");
             printf("%d",vetorUniao[i]);
        }else{
             printf(", %d",vetorUniao[i]);
        }
+    }printf("]\n");
+
+    //Print do vetorIntersecao
+    for(int i = 0; i < tamRealIntersecao; i++){
+       if(i == 0){
+            printf("[");
+            printf("%d",vetorIntersecao[i]);
+       }else{
+            printf(", %d",vetorIntersecao[i]);
+       }
     }printf("]");
     
+    printf("\n");
+
     return 0;
 }
 

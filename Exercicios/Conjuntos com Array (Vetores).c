@@ -103,7 +103,7 @@ int main(){
                 break;  
             }
         }
-        if(presente = 0){
+        if(presente == 0){
             vetorSomente_A[tamRealSomente_A++] = vetor1[i];
         }
         
@@ -121,8 +121,8 @@ int main(){
                 break;  
             }
         }
-        if(presente = 0){
-            vetorSomente_A[tamRealSomente_A++] = vetor2[i];
+        if(presente == 0){
+            vetorSomente_B[tamRealSomente_B++] = vetor2[i];
         }
         
     }

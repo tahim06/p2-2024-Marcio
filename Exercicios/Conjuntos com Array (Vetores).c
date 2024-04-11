@@ -186,7 +186,7 @@ int main(){
     
     //Print do Vetor de B - A
     for(int i = 0; i < tamRealSomente_B; i++){
-       if(i == 0){
+        if(i == 0){
             printf("B - A = [");
             printf("%d",vetorSomente_B[i]);
        }else{

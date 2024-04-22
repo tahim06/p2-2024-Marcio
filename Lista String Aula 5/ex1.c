@@ -3,16 +3,22 @@
 #include <ctype.h>
 #define TAM 80
 
+int isVogal(char );
+
 int main(){
-    char frase[TAM-1];
+    char frase[TAM];
+
+    scanf("%[^\n]", frase);
     int tamReal = strlen(frase);
 
-    fgets(frase,TAM,stdin);
-    frase[tamReal -1] = '\0';
 
-    isVogal(frase);
+    for(int i = 0; i < tamReal+1; i++){
+        if (isVogal(frase[i])){
+            frase[i] = '*';
+        }
+    }
 
-
+    printf("%s\n", frase);
     return 0;
 }
 
@@ -20,17 +26,11 @@ int isVogal(char c){
     char minusculo = tolower(c);
     char letras[5] = {'a','e','i','o','u'};
 
-    for(int i = 0; i < 5; i++){
-        if(strcmp(c,letras[i]) == 1){
+    for (int i = 0; i < 5; i++){
+        if (minusculo == letras[i]){
             return 1;
-            break;
         }
-        else if(strcmp(c,letras[i]) != 1 && i < 5){
-            continue;
-        }else{
-            break;
-        }
-
     }
 
+    return 0; 
 }

@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "cmath": "c"
-    }
+        "cmath": "c",
+        "ctype.h": "c"
+    },
+    "cmake.sourceDirectory": "/workspaces/p2-2024-Marcio/Palindromo"
 }

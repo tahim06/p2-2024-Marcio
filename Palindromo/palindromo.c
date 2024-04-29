@@ -3,6 +3,7 @@
 #define TAM 51
 
 void removerEspaco(char frase[]);
+int isPalindromo(char frase[]);
 
 int main() {
     char frase[TAM];
@@ -10,10 +11,14 @@ int main() {
         printf("Digite uma Frase com até %d caracteres: ", TAM - 1);
         scanf(" %[^\n]", frase);
     } while (strlen(frase) < 1 || strlen(frase) >= TAM);
-
+    
     removerEspaco(frase);
 
-    puts(frase);
+    if (isPalindromo(frase)) {
+        printf("A palavra %s é palíndromo.\n", frase);
+    } else {
+        printf("A palavra %s não é palíndromo.\n", frase);
+    }
 
     return 0;
 }
@@ -28,3 +33,15 @@ void removerEspaco(char frase[]) {
     frase[count] = '\0';
 }
 
+int isPalindromo(char frase[]) {
+    int tamReal = strlen(frase),j = 0;
+    char frase2[tamReal + 1];
+
+    for (int i = tamReal - 1; i >= 0; i--) {
+        frase2[j] = frase[i];
+        j++;
+    }
+    frase2[tamReal] = '\0';  
+
+    return strcmp(frase2, frase) == 0;
+}

@@ -27,10 +27,12 @@ int isPalindromo(char frase[]) {
     int j = 0, k = 0;
     for (int i = tamReal - 1; i >= 0; i--) {
         if (frase[i] != ' ') {
-            frase2[j++] = frase[i];
+            frase2[j] = frase[i];
+            j++;
         }
         if (frase[k] != ' ') {
-            frase[k++] = frase[k];
+            frase[k] = frase[k];
+            k++;
         }
     }
     frase[j+1] = '\0';

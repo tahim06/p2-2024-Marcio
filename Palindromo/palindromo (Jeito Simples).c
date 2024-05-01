@@ -15,9 +15,9 @@ int main() {
     removerEspaco(frase);
 
     if (isPalindromo(frase)) {
-        printf("A palavra %s é palíndromo.\n", frase);
+        printf("É palíndromo.\n", frase);
     } else {
-        printf("A palavra %s não é palíndromo.\n", frase);
+        printf("Não é palíndromo.\n", frase);
     }
 
     return 0;
@@ -27,7 +27,8 @@ void removerEspaco(char frase[]) {
     int count = 0;
     for (int i = 0; frase[i] != '\0'; i++) {
         if (frase[i] != ' ') {
-            frase[count++] = frase[i];
+            frase[count] = frase[i];
+            count++;
         }
     }
     frase[count] = '\0';

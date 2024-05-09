@@ -36,7 +36,7 @@ void removerEspaco(char frase[]) {
 
 int isPalindromo(char frase[]) {
     int tamReal = strlen(frase),j = 0;
-    char frase2[tamReal + 1];
+    char frase2[tamReal];
 
     for (int i = tamReal - 1; i >= 0; i--) {
         frase2[j] = frase[i];

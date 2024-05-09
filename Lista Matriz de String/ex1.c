@@ -24,7 +24,12 @@ int main(){
         media[i] = ((primNota[i] * 2) + (segNota[i] * 3)) / 5;
     }
 
-    
+    for(int i = 0; i < LINHAS; i++){
+        int passado = 0;
+        if(media[i] >= 7){
+            
+        }
+    }
 
 
     return 0;

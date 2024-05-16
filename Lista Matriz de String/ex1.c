@@ -5,36 +5,59 @@
 #define ALUNOS 2
 #define COLUNAS 80
 
+struct notasAlunos{
+    char nomeAluno[COLUNAS];
+    double primNota;
+    double segNota;
+    double media;
+};
+
 int passou(double media);
 
 int main(){
-    char nomeAluno[ALUNOS][COLUNAS];
-    double primNota[ALUNOS],segNota[ALUNOS],media[ALUNOS];
+    struct notasAlunos alunos[ALUNOS]; 
 
     for(int i = 0 ; i < ALUNOS; i++){
         printf("Informe o nome do %d aluno:\n", i + 1);
-        fgets(nomeAluno[i], COLUNAS, stdin);
-        int tam = strlen(nomeAluno[i]);
-        if (nomeAluno[i][tam - 1] == '\n') 
-            nomeAluno[i][tam - 1] = '\0';  
+        fgets(alunos[i].nomeAluno, COLUNAS, stdin);
+        int tam = strlen(alunos[i].nomeAluno);
+        if (alunos[i].nomeAluno[tam - 1] == '\n') 
+            alunos[i].nomeAluno[tam - 1] = '\0';  
 
-        printf("Informe a primeira nota do aluno %s: ", nomeAluno[i]);
-        scanf("%lf", &primNota[i]);
+        printf("Informe a primeira nota do aluno %s:\n", alunos[i].nomeAluno);
+        scanf("%lf", &alunos[i].primNota);
         
-        printf("Informe a segunda nota do aluno %s: ", nomeAluno[i]);
-        scanf("%lf", &segNota[i]);
+        printf("Informe a segunda nota do aluno %s:\n", alunos[i].nomeAluno);
+        scanf("%lf", &alunos[i].segNota);
         getchar(); 
     }
-
+    
+    double somaMedia = 0;
     for(int i = 0; i < ALUNOS; i++){
-        media[i] = ((primNota[i] * 2) + (segNota[i] * 3)) / 5;
-        if(passou(media[i])){
-            printf("O aluno %s obteve média %lf e foi Aprovado.\n", nomeAluno[i], media[i]);
+        alunos[i].media = ((alunos[i].primNota * 2) + (alunos[i].segNota * 3)) / 5;
+        if(passou(alunos[i].media)){
+            printf("O aluno %s obteve média %lf e foi Aprovado.\n", alunos[i].nomeAluno, alunos[i].media);
         }else{
-            printf("O aluno %s obteve média %lf e foi Reprovado.\n", nomeAluno[i], media[i]);
+            printf("O aluno %s obteve média %lf e foi Reprovado.\n", alunos[i].nomeAluno, alunos[i].media);
         }
+        somaMedia += alunos[i].media;
     }
+    double mediaTurma = somaMedia/ALUNOS;
+    
+    int abaixoMediaTurma = 0;
+    char abaixoTurma[ALUNOS][COLUNAS];
 
+    for(int i = 0;  i < ALUNOS; i++){
+        if (alunos[i].media < mediaTurma){
+            abaixoMediaTurma+=1;
+        }  
+    }
+    printf("%d Aluno(s) ficaram abaixo da média, Nomes:\n ",abaixoMediaTurma);
+    for(int i = 0;  i < ALUNOS; i++){
+        if (alunos[i].media < mediaTurma){
+                printf("%s\n", alunos[i].nomeAluno);
+        }
+    }        
     return 0;
 }
 

@@ -13,16 +13,14 @@ struct notasAlunos{
 };
 
 int passou(double media);
+void lerString(char *str, int maxTam);
 
 int main(){
     struct notasAlunos alunos[ALUNOS]; 
 
     for(int i = 0 ; i < ALUNOS; i++){
         printf("Informe o nome do %d aluno:\n", i + 1);
-        fgets(alunos[i].nomeAluno, COLUNAS, stdin);
-        int tam = strlen(alunos[i].nomeAluno);
-        if (alunos[i].nomeAluno[tam - 1] == '\n') 
-            alunos[i].nomeAluno[tam - 1] = '\0';  
+        lerString(alunos[i].nomeAluno,COLUNAS);
 
         printf("Informe a primeira nota do aluno %s:\n", alunos[i].nomeAluno);
         scanf("%lf", &alunos[i].primNota);
@@ -67,4 +65,12 @@ int passou(double media){
         aprovado = 1;
     }
     return aprovado;       
+}
+
+void lerString(char *str, int maxTam) {
+    fgets(str, maxTam, stdin);
+    int tam = strlen(str);
+    if (str[tam - 1] == '\n') {
+      str[tam - 1] = '\0';
+    }
 }

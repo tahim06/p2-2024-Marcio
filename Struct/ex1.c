@@ -5,41 +5,33 @@
 #define ESTADOS 2
 #define TAM_TEXTO 61
 
-void lerString(char *str);
-void solicitarDados(struct infoEstados *estado[], int qtdEstados,int tamTexto);
-
 struct infoEstados{
     char nome[TAM_TEXTO];
     int qtdVeiculos;
     int qtdAcidentes;
 };
 
+void lerString(char *str);
+void solicitarDados(struct infoEstados estado[], int qtdEstados,int tamTexto);
 
 int main(){
     struct infoEstados estados[ESTADOS];
-    solicitarDados(&estados,ESTADOS,TAM_TEXTO);
+    solicitarDados(estados,ESTADOS,TAM_TEXTO);
 
     return 0;
 }
 
-void solicitarDados(struct infoEstados *estado[], int qtdEstados,int tamTexto){
+void solicitarDados(struct infoEstados estado[], int qtdEstados,int tamTexto){
     for(int i = 0; i < qtdEstados;i++){
         printf("Informe o nome do %d estado:\n ", i+1);
-        fgets(estado[i]->nome,tamTexto,stdin);
-
-        printf("Informe quantos veículos circulam em %s:\n ", estado[i]->nome);
-        scanf("%d",&estado[i]->qtdVeiculos);
-
-        printf("Informe quantos acidentes de trânsito tiveram em %s: ", estado[i]->nome);
-        scanf("%d",&estado[i]->qtdAcidentes);
+        fgets(estado[i].nome,tamTexto,stdin);
         
-        lerString(&estado[i]->nome);
-    }
-}
+        printf("Informe quantos veículos circulam em %s:\n ", estado[i].nome);
+        scanf("%d",&estado[i].qtdVeiculos);
 
-void lerString(char *str){
-    int tam = strlen(str);
-    if(str[tam - 1] == '\n'){
-        str[tam - 1] = '\0';
+        printf("Informe quantos acidentes de trânsito tiveram em %s: ", estado[i].nome);
+        scanf("%d",&estado[i].qtdAcidentes);
+        
+        while(getchar() != '\n');
     }
 }

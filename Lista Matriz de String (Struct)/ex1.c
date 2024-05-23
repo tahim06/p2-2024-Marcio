@@ -50,7 +50,7 @@ int main(){
             abaixoMediaTurma+=1;
         }  
     }
-    printf("%d Aluno(s) ficaram abaixo da média, Nomes:\n ",abaixoMediaTurma);
+    printf("%d Aluno(s) ficaram abaixo da média da Turma, Nomes:\n ",abaixoMediaTurma);
     for(int i = 0;  i < ALUNOS; i++){
         if (alunos[i].media < mediaTurma){
                 printf("%s\n", alunos[i].nomeAluno);

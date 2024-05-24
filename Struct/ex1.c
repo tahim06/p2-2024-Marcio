@@ -11,7 +11,6 @@ struct infoEstados{
     int qtdAcidentes;
 };
 
-void lerString(char *str);
 void solicitarDados(struct infoEstados estado[], int qtdEstados,int tamTexto);
 
 int main(){
@@ -34,4 +33,8 @@ void solicitarDados(struct infoEstados estado[], int qtdEstados,int tamTexto){
         
         while(getchar() != '\n');
     }
+} 
+
+void maior_menor_qtdAcidentes(struct infoEstados *estado[], int qtdEstados){
+
 }

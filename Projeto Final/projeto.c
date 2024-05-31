@@ -8,7 +8,8 @@
 #define TAM_SENHA 15 
 #define TAM_PLAYLIST 100 
 #define TAM_TITULO 50 
-#define TAM_MUSICAS 100 
+#define TAM_MUSICAS 100
+#define TAM_MAX_USUARIOS 200 
 
 struct Musica { 
 int codigo; // autoincremento 
@@ -35,13 +36,42 @@ int qtdPlaylistsFav; // quantid. de playlists favoritadas pelo usuário
 int playlistsFav[TAM_PLAYLIST]; // códigos das playlists favoritadas pelo usuário 
 };
 
+void lerString(char *str, int maxTam);
 
 int main(){
- 
+    struct Usuario usuario[TAM_MAX_USUARIOS];
+    int tipoUsuario;
+    char senha[TAM_SENHA];
+    char senhaAdm[TAM_SENHA] = "m@st3r2024\0";
+
+    do{
+    printf("Como Deseja Logar?\n 1- Administrador\n 2- Usuário");
+    scanf("%d", &tipoUsuario);
+    while (getchar() != '\n');
+    } while(tipoUsuario < 1 || tipoUsuario > 2);
+    
+    
+    if(tipoUsuario == 1){
+        do{
+        printf("Informe a senha para acessar como Administrador :\n");
+        lerString(senha,TAM_SENHA);
+        }while(strcmp(senha,senhaAdm) != 0);
+
+
+
+    }
 
 
 
 
 
     return 0;
+}
+
+void lerString(char *str, int maxTam) {
+    fgets(str, maxTam, stdin);
+    int tam = strlen(str);
+    if (str[tam - 1] == '\n') {
+      str[tam - 1] = '\0';
+    }
 }

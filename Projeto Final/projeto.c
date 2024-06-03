@@ -41,8 +41,7 @@ void lerString(char *str, int maxTam);
 void loginAdministrador();
 void loginUsuario(struct Usuario usuario[], int *contUsuarios);
 void cadastro(struct Usuario usuario[], int *contUsuarios);
-
-int main() {
+int main(){
     int tipoUsuario, contUsuarios = 0;
     struct Usuario usuario[TAM_MAX_USUARIOS];
     

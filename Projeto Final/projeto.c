@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
 #define TAM_MAX_PLYLST 200 
 #define TAM_NOME 50 
 #define TAM_LOGIN 15 
@@ -9,61 +10,54 @@
 #define TAM_PLAYLIST 100 
 #define TAM_TITULO 50 
 #define TAM_MUSICAS 100
-#define TAM_MAX_USUARIOS 200 
+#define TAM_MAX_USUARIOS 300 
 
 struct Musica { 
-int codigo; // autoincremento 
-char titulo[TAM_TITULO]; // título da música 
-char artista[TAM_NOME]; // nome do artista que canta esta música 
+    int codigo; // autoincremento 
+    char titulo[TAM_TITULO]; // título da música 
+    char artista[TAM_NOME]; // nome do artista que canta esta música 
 }; 
 
 struct Playlist { 
-int codigo; // autoincremento 
-int codUsuario; // o código do usuário que criou a playlist 
-char titulo[TAM_TITULO]; // título desta playlist 
-int qtdMusicas; // qtd atual de músicas incluídas nesta playlist 
-int musicas[TAM_MUSICAS]; // vetor contendo os códigos das músicas 
+    int codigo; // autoincremento 
+    int codUsuario; // o código do usuário que criou a playlist 
+    char titulo[TAM_TITULO]; // título desta playlist 
+    int qtdMusicas; // qtd atual de músicas incluídas nesta playlist 
+    int musicas[TAM_MUSICAS]; // vetor contendo os códigos das músicas 
 }; 
 
 struct Usuario {  
-int codigo; // autoincremento 
-char nome[TAM_NOME]; 
-char login[TAM_LOGIN]; 
-char senha[TAM_SENHA]; 
-int qtdPlaylists; // quantid. de playlists criadas pelo usuário 
-struct Playlist playlists[TAM_PLAYLIST]; // todas playlists criadas 
-int qtdPlaylistsFav; // quantid. de playlists favoritadas pelo usuário 
-int playlistsFav[TAM_PLAYLIST]; // códigos das playlists favoritadas pelo usuário 
+    int codigo; // autoincremento 
+    char nome[TAM_NOME]; 
+    char login[TAM_LOGIN]; 
+    char senha[TAM_SENHA]; 
+    int qtdPlaylists; // quantid. de playlists criadas pelo usuário 
+    struct Playlist playlists[TAM_PLAYLIST]; // todas playlists criadas 
+    int qtdPlaylistsFav; // quantid. de playlists favoritadas pelo usuário 
+    int playlistsFav[TAM_PLAYLIST]; // códigos das playlists favoritadas pelo usuário 
 };
 
 void lerString(char *str, int maxTam);
+void loginAdministrador();
+void loginUsuario(struct Usuario *usuario[], int *contUsuarios);
+void cadastro(struct Usuario *usuario[], int *contUsuarios);
 
-int main(){
+int main() {
+    int tipoUsuario, contUsuarios = 0;
     struct Usuario usuario[TAM_MAX_USUARIOS];
-    int tipoUsuario;
-    char senha[TAM_SENHA];
-    char senhaAdm[TAM_SENHA] = "m@st3r2024\0";
-
-    do{
-    printf("Como Deseja Logar?\n 1- Administrador\n 2- Usuário");
-    scanf("%d", &tipoUsuario);
-    while (getchar() != '\n');
+    
+    do {
+        printf("Como Deseja Logar?\n 1- Administrador\n 2- Usuário\n");
+        scanf("%d", &tipoUsuario);
+        while (getchar() != '\n'); 
     } while(tipoUsuario < 1 || tipoUsuario > 2);
     
     
-    if(tipoUsuario == 1){
-        do{
-        printf("Informe a senha para acessar como Administrador :\n");
-        lerString(senha,TAM_SENHA);
-        }while(strcmp(senha,senhaAdm) != 0);
-
-
-
+    if(tipoUsuario == 1) {
+        loginAdministrador();
+    } else if(tipoUsuario == 2) {
+        loginUsuario(&usuario,&contUsuarios);
     }
-
-
-
-
 
     return 0;
 }
@@ -72,6 +66,57 @@ void lerString(char *str, int maxTam) {
     fgets(str, maxTam, stdin);
     int tam = strlen(str);
     if (str[tam - 1] == '\n') {
-      str[tam - 1] = '\0';
+        str[tam - 1] = '\0';
     }
+}
+
+void loginAdministrador() {
+    char senha[TAM_SENHA];
+    char senhaAdm[TAM_SENHA] = "m@st3r2024";
+    
+    do {
+        printf("Informe a senha para acessar como Administrador:\n");
+        lerString(senha, TAM_SENHA);
+    } while(strcmp(senha, senhaAdm) != 0);
+    
+    printf("Login como Administrador bem-sucedido!\n");
+    printf("\n");
+}
+
+void loginUsuario(struct Usuario *usuario[], int *contUsuarios) {
+    int tipoLogin;
+    
+    do{
+    printf("Já possui um logar ou cadastrar?\n 1- Logar\n 2- Cadastrar\n");
+    scanf("%d",&tipoLogin);
+    } while(tipoLogin < 1 || tipoLogin > 2);
+
+    if(tipoLogin == 1){
+
+    }else{
+       cadastro(&usuario,&contUsuarios);
+    }
+     
+}
+
+void cadastro(struct Usuario *usuario[], int *contUsuarios){
+    char confirmarSenha[TAM_SENHA];
+    *contUsuarios += 1;
+    printf("Informe seu Nome Completo: \n");
+    lerstring(usuario[*contUsuarios-1]->nome,TAM_NOME);
+       
+    printf("Informe o Login:\n");
+    lerString(usuario[*contUsuarios-1]->login,TAM_LOGIN);
+
+    printf("Informe a Senha:\n");
+    lerString(usuario[*contUsuarios-1]->senha,TAM_SENHA);
+
+    do{  
+        printf("Confirme sua senha:\n ");
+        lerString(confirmarSenha,TAM_SENHA);
+    }while(strcmp(usuario[*contUsuarios-1]->senha, confirmarSenha) != 0);
+
+    printf("Cadastro Bem Sucedido!!\n");
+
+
 }

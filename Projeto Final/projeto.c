@@ -39,8 +39,8 @@ struct Usuario {
 
 void lerString(char *str, int maxTam);
 void loginAdministrador();
-void loginUsuario(struct Usuario *usuario[], int *contUsuarios);
-void cadastro(struct Usuario *usuario[], int *contUsuarios);
+void loginUsuario(struct Usuario usuario[], int *contUsuarios);
+void cadastro(struct Usuario usuario[], int *contUsuarios);
 
 int main() {
     int tipoUsuario, contUsuarios = 0;
@@ -52,11 +52,10 @@ int main() {
         while (getchar() != '\n'); 
     } while(tipoUsuario < 1 || tipoUsuario > 2);
     
-    
     if(tipoUsuario == 1) {
         loginAdministrador();
     } else if(tipoUsuario == 2) {
-        loginUsuario(&usuario,&contUsuarios);
+        loginUsuario(usuario, &contUsuarios);
     }
 
     return 0;
@@ -83,40 +82,47 @@ void loginAdministrador() {
     printf("\n");
 }
 
-void loginUsuario(struct Usuario *usuario[], int *contUsuarios) {
+void loginUsuario(struct Usuario usuario[], int *contUsuarios) {
     int tipoLogin;
     
-    do{
-    printf("Já possui um logar ou cadastrar?\n 1- Logar\n 2- Cadastrar\n");
-    scanf("%d",&tipoLogin);
+    do {
+        printf("Já possui um cadastro ou deseja cadastrar?\n 1- Logar\n 2- Cadastrar\n");
+        scanf("%d", &tipoLogin);
+        while (getchar() != '\n'); 
     } while(tipoLogin < 1 || tipoLogin > 2);
 
-    if(tipoLogin == 1){
-
-    }else{
-       cadastro(&usuario,&contUsuarios);
+    if(tipoLogin == 1) {
+        // Implementar funcionalidade de login aqui
+        printf("Função de login ainda não implementada.\n");
+    } else {
+        cadastro(usuario, contUsuarios);
     }
-     
 }
 
-void cadastro(struct Usuario *usuario[], int *contUsuarios){
+void cadastro(struct Usuario usuario[], int *contUsuarios) {
     char confirmarSenha[TAM_SENHA];
-    *contUsuarios += 1;
+    struct Usuario novoUsuario;
+    
     printf("Informe seu Nome Completo: \n");
-    lerstring(usuario[*contUsuarios-1]->nome,TAM_NOME);
+    lerString(novoUsuario.nome, TAM_NOME);
        
     printf("Informe o Login:\n");
-    lerString(usuario[*contUsuarios-1]->login,TAM_LOGIN);
+    lerString(novoUsuario.login, TAM_LOGIN);
 
     printf("Informe a Senha:\n");
-    lerString(usuario[*contUsuarios-1]->senha,TAM_SENHA);
+    lerString(novoUsuario.senha, TAM_SENHA);
 
-    do{  
-        printf("Confirme sua senha:\n ");
-        lerString(confirmarSenha,TAM_SENHA);
-    }while(strcmp(usuario[*contUsuarios-1]->senha, confirmarSenha) != 0);
+    do {  
+        printf("Confirme sua senha:\n");
+        lerString(confirmarSenha, TAM_SENHA);
+    } while(strcmp(novoUsuario.senha, confirmarSenha) != 0);
+
+    novoUsuario.codigo = *contUsuarios + 1;
+    novoUsuario.qtdPlaylists = 0;
+    novoUsuario.qtdPlaylistsFav = 0;
+
+    usuario[*contUsuarios] = novoUsuario;
+    (*contUsuarios)++;
 
     printf("Cadastro Bem Sucedido!!\n");
-
-
 }

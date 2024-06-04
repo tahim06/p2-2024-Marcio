@@ -34,98 +34,15 @@ struct Usuario
     char nome[TAM_NOME];
     char login[TAM_LOGIN];
     char senha[TAM_SENHA];
-    int qtdPlaylists;                        // quantid. de playlists criadas pelo usuário
-    struct Playlist playlists[TAM_PLAYLIST]; // todas playlists criadas
-    int qtdPlaylistsFav;                     // quantid. de playlists favoritadas pelo usuário
+    int qtdPlaylists;                        // quantidade de playlists criadas pelo usuário
+    struct Playlist playlists[TAM_PLAYLIST]; // todas as playlists criadas
+    int qtdPlaylistsFav;                     // quantidade de playlists favoritadas pelo usuário
     int playlistsFav[TAM_PLAYLIST];          // códigos das playlists favoritadas pelo usuário
 };
 
 void lerString(char *str, int maxTam);
 void loginAdministrador();
-void loginUsuario(struct Usuario usuario[], int *contUsuarios, int *posicao);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+int loginUsuario(struct Usuario usuario[], int *contUsuarios, int *posicao);
 void cadastro(struct Usuario usuario[], int *contUsuarios, int *posicao);
 
 int main()
@@ -138,8 +55,7 @@ int main()
     {
         printf("Como Deseja Logar?\n 1- Administrador\n 2- Usuário\n");
         scanf("%d", &tipoUsuario);
-        while (getchar() != '\n')
-            ;
+        while (getchar() != '\n'); // Limpar buffer
     } while (tipoUsuario < 1 || tipoUsuario > 2);
 
     if (tipoUsuario == 1)
@@ -149,18 +65,45 @@ int main()
     else
     {
         int opcao;
+        int tentarNovamente;
 
         do
         {
             printf("Já possui um cadastro ou deseja cadastrar?\n 1- Logar\n 2- Cadastrar\n");
             scanf("%d", &opcao);
-            while (getchar() != '\n')
-                ;
+            while (getchar() != '\n'); // Limpar buffer
         } while (opcao < 1 || opcao > 2);
 
         if (opcao == 1)
         {
-            loginUsuario(usuario, &contUsuarios, &posicao_usuario);
+            while (1)
+            {
+                if (loginUsuario(usuario, &contUsuarios, &posicao_usuario))
+                {
+                    printf("Login Bem Sucedido !!\n");
+                    break; // Sair do loop de login
+                }
+                else
+                {
+                    printf("Login ou Senha inválida!!\n\n");
+                    do
+                    {
+                        printf("O que Deseja?\n 1- Tentar Novamente\n 2- Cadastrar Novo Usuário\n");
+                        scanf("%d", &tentarNovamente);
+                        while (getchar() != '\n'); // Limpar buffer
+                    } while (tentarNovamente < 1 || tentarNovamente > 2);
+
+                    if (tentarNovamente == 1)
+                    {
+                        continue; // Tentar login novamente
+                    }
+                    else
+                    {
+                        cadastro(usuario, &contUsuarios, &posicao_usuario);
+                        break; // Sair do loop de login após cadastro
+                    }
+                }
+            }
         }
         else
         {
@@ -175,7 +118,7 @@ void lerString(char *str, int maxTam)
 {
     fgets(str, maxTam, stdin);
     int tam = strlen(str);
-    if (str[tam - 1] == '\n')
+    if (tam > 0 && str[tam - 1] == '\n')
     {
         str[tam - 1] = '\0';
     }
@@ -185,7 +128,7 @@ void loginAdministrador()
 {
     char senha[TAM_SENHA];
     char senhaAdm[TAM_SENHA] = "m@st3r2024";
-
+    printf("-----------LOGIN ADM-----------\n");
     do
     {
         printf("Informe a senha para acessar como Administrador:\n");
@@ -196,46 +139,36 @@ void loginAdministrador()
     printf("\n");
 }
 
-void loginUsuario(struct Usuario usuario[], int *contUsuarios, int *posicao)
+int loginUsuario(struct Usuario usuario[], int *contUsuarios, int *posicao)
 {
     char login[TAM_LOGIN];
     char senha[TAM_SENHA];
     int encontrado = 0;
+    printf("-----------LOGIN-----------\n");
+    printf("Digite seu Login: ");
+    lerString(login, TAM_LOGIN);
 
-    while (1)
+    printf("Digite sua senha: ");
+    lerString(senha, TAM_SENHA);
+
+    for (int i = 0; i < *contUsuarios; i++)
     {
-        printf("Digite seu Login:\n");
-        lerString(login, TAM_LOGIN);
-
-        printf("Digite sua senha:\n");
-        lerString(senha, TAM_SENHA);
-
-        for (int i = 0; i < *contUsuarios; i++)
+        if (strcmp(login, usuario[i].login) == 0 && strcmp(senha, usuario[i].senha) == 0)
         {
-            if (strcmp(login, usuario[i].login) == 0 && strcmp(senha, usuario[i].senha) == 0)
-            {
-                encontrado = 1;
-                *posicao = i;
-                break;
-            }
-        }
-
-        if (encontrado)
-        {
-            printf("Login realizado com sucesso!\n");
+            encontrado = 1;
+            *posicao = i;
             break;
         }
-        else
-        {
-            printf("Login ou senha incorretos ou usuário não encontrado.\n");
-            printf("Deseja");
-        }
     }
+
+    return encontrado;
 }
 
 void cadastro(struct Usuario usuario[], int *contUsuarios, int *posicao)
 {
     struct Usuario novoUsuario;
+
+    printf("-----------CADASTRO-----------\n");
 
     printf("Informe seu Nome Completo: \n");
     lerString(novoUsuario.nome, TAM_NOME);
@@ -255,5 +188,5 @@ void cadastro(struct Usuario usuario[], int *contUsuarios, int *posicao)
     (*contUsuarios)++;
     *posicao = *contUsuarios - 1;
 
-    printf("Cadastro realizado com sucesso!\n");
+    printf("Cadastro realizado com sucesso!\n Conta Cadastrada foi Logada automaticamente.\n");
 }

@@ -44,18 +44,20 @@ void lerString(char *str, int maxTam);
 void loginAdministrador();
 int loginUsuario(struct Usuario usuario[], int *contUsuarios, int *posicao);
 void cadastro(struct Usuario usuario[], int *contUsuarios, int *posicao);
+void listarUsuarios(struct Usuario usuario[], int qtdUsuarios);
 
 int main()
 {
     int tipoUsuario, contUsuarios = 0;
     int posicao_usuario = -1;
     struct Usuario usuario[TAM_MAX_USUARIOS];
+    
 
     do
     {
         printf("Como Deseja Logar?\n 1- Administrador\n 2- Usuário\n");
         scanf("%d", &tipoUsuario);
-        while (getchar() != '\n'); // Limpar buffer
+        while (getchar() != '\n');
     } while (tipoUsuario < 1 || tipoUsuario > 2);
 
     if (tipoUsuario == 1)
@@ -71,7 +73,7 @@ int main()
         {
             printf("Já possui um cadastro ou deseja cadastrar?\n 1- Logar\n 2- Cadastrar\n");
             scanf("%d", &opcao);
-            while (getchar() != '\n'); // Limpar buffer
+            while (getchar() != '\n');
         } while (opcao < 1 || opcao > 2);
 
         if (opcao == 1)
@@ -81,7 +83,7 @@ int main()
                 if (loginUsuario(usuario, &contUsuarios, &posicao_usuario))
                 {
                     printf("Login Bem Sucedido !!\n");
-                    break; // Sair do loop de login
+                    break;
                 }
                 else
                 {
@@ -90,17 +92,17 @@ int main()
                     {
                         printf("O que Deseja?\n 1- Tentar Novamente\n 2- Cadastrar Novo Usuário\n");
                         scanf("%d", &tentarNovamente);
-                        while (getchar() != '\n'); // Limpar buffer
+                        while (getchar() != '\n');
                     } while (tentarNovamente < 1 || tentarNovamente > 2);
 
                     if (tentarNovamente == 1)
                     {
-                        continue; // Tentar login novamente
+                        continue;
                     }
                     else
                     {
                         cadastro(usuario, &contUsuarios, &posicao_usuario);
-                        break; // Sair do loop de login após cadastro
+                        break;
                     }
                 }
             }
@@ -189,4 +191,16 @@ void cadastro(struct Usuario usuario[], int *contUsuarios, int *posicao)
     *posicao = *contUsuarios - 1;
 
     printf("Cadastro realizado com sucesso!\n Conta Cadastrada foi Logada automaticamente.\n");
+}
+
+void listarUsuarios(struct Usuario usuario[], int qtdUsuarios)
+{
+    printf("-----------LISTA DE USUÁRIOS-----------\n");
+    for (int i = 0; i < qtdUsuarios; i++)
+    {
+        printf("Usuário %d:\n", i + 1);
+        printf("Nome: %s\n", usuario[i].nome);
+        printf("Login: %s\n", usuario[i].login);
+        printf("Código: %d\n", usuario[i].codigo);
+    }
 }

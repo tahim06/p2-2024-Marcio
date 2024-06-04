@@ -45,13 +45,22 @@ void loginAdministrador();
 int loginUsuario(struct Usuario usuario[], int *contUsuarios, int *posicao);
 void cadastro(struct Usuario usuario[], int *contUsuarios, int *posicao);
 void listarUsuarios(struct Usuario usuario[], int qtdUsuarios);
+void listarMusicas(struct Musica musicas[], int qtdMusicas);
+void listarPlaylists(struct Usuario usuario[], int qtdUsuarios, struct Musica musicas[], int qtdMusicas);
+char* buscarTituloMusica(struct Musica musicas[], int qtdMusicas, int codigo);
 
 int main()
 {
     int tipoUsuario, contUsuarios = 0;
     int posicao_usuario = -1;
     struct Usuario usuario[TAM_MAX_USUARIOS];
-    
+    struct Musica musicas[TAM_MUSICAS];
+    int qtdMusicas = 0;
+
+    // Adicione algumas músicas para teste
+    musicas[qtdMusicas++] = (struct Musica){1, "Imagine", "John Lennon"};
+    musicas[qtdMusicas++] = (struct Musica){2, "Hey Jude", "The Beatles"};
+    musicas[qtdMusicas++] = (struct Musica){3, "Hotel California", "Eagles"};
 
     do
     {
@@ -112,6 +121,10 @@ int main()
             cadastro(usuario, &contUsuarios, &posicao_usuario);
         }
     }
+
+    listarUsuarios(usuario, contUsuarios);
+    listarMusicas(musicas, qtdMusicas);
+    listarPlaylists(usuario, contUsuarios, musicas, qtdMusicas);
 
     return 0;
 }
@@ -202,5 +215,51 @@ void listarUsuarios(struct Usuario usuario[], int qtdUsuarios)
         printf("Nome: %s\n", usuario[i].nome);
         printf("Login: %s\n", usuario[i].login);
         printf("Código: %d\n", usuario[i].codigo);
+    }
+}
+
+void listarPlaylists(struct Usuario usuario[], int qtdUsuarios, struct Musica musicas[], int qtdMusicas)
+{
+    printf("-----------LISTA DE PLAYLISTS-----------\n");
+    for (int i = 0; i < qtdUsuarios; i++)
+    {
+        for(int j = 0; j < usuario[i].qtdPlaylists; j++)
+        {
+            printf("Usuário %d:\n", i + 1);
+            printf("Código: %d\n", usuario[i].playlists[j].codigo);
+            printf("Título: %s\n", usuario[i].playlists[j].titulo);
+            printf("Nome do Criador: %s\n", usuario[i].nome);
+            printf("Músicas:\n");
+            for(int k = 0; k < usuario[i].playlists[j].qtdMusicas; k++)
+            {
+                char* titulo = buscarTituloMusica(musicas, qtdMusicas, usuario[i].playlists[j].musicas[k]);
+                printf("%dª- %s\n", k + 1, titulo);
+            }
+            printf("\n");
+        }
+    }
+}
+
+char* buscarTituloMusica(struct Musica musicas[], int qtdMusicas, int codigo)
+{
+    for(int i = 0; i < qtdMusicas; i++)
+    {
+        if(musicas[i].codigo == codigo)
+        {
+            return musicas[i].titulo;
+        }
+    }
+    
+}
+
+void listarMusicas(struct Musica musicas[], int qtdMusicas)
+{
+    printf("-----------LISTA DE MÚSICAS-----------\n");
+    for (int i = 0; i < qtdMusicas; i++)
+    {
+        printf("----------Música %d----------\n", i + 1);
+        printf("Código: %d\n", musicas[i].codigo);
+        printf("Título: %s\n", musicas[i].titulo);
+        printf("Artista: %s\n", musicas[i].artista);
     }
 }

@@ -10,7 +10,7 @@
 #define TAM_PLAYLIST 100
 #define TAM_TITULO 50
 #define TAM_MUSICAS 100
-#define TAM_MAX_USUARIOS 300
+#define TAM_MAX_USUARIOS 100
 
 struct Musica
 {
@@ -43,6 +43,89 @@ struct Usuario
 void lerString(char *str, int maxTam);
 void loginAdministrador();
 void loginUsuario(struct Usuario usuario[], int *contUsuarios, int *posicao);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void cadastro(struct Usuario usuario[], int *contUsuarios, int *posicao);
 
 int main()
@@ -145,6 +228,7 @@ void loginUsuario(struct Usuario usuario[], int *contUsuarios, int *posicao)
         else
         {
             printf("Login ou senha incorretos ou usuário não encontrado.\n");
+            printf("Deseja");
         }
     }
 }

@@ -52,6 +52,7 @@ void cadastrarMusicas(struct Musica musicas[], int *qtdMusicas);
 void consultarUsuario(struct Usuario usuario[], int qtdUsuarios);
 void ADM_alterarSenhaUsuario(struct Usuario *usuario[],int qtdUsuarios);
 void consultarMusica(struct Musica musicas[], int qtdMusicas);
+void alterarDadosMusica(struct Musica musicas[], int qtdMusicas);
 
 int main()
 {
@@ -69,8 +70,8 @@ int main()
         {
             printf("Como Deseja Logar?\n 1- Administrador\n 2- Usuário\n 3- Encerrar Programa\n");
             scanf("%d", &tipoUsuario);
-            while (getchar() != '\n')
-                ;
+            while (getchar() != '\n');
+             
         } while (tipoUsuario < 1 || tipoUsuario > 3);
 
         if (tipoUsuario == 3)
@@ -113,10 +114,11 @@ int main()
 
             do
             {
+                
                 printf("Já possui um cadastro ou deseja cadastrar?\n 1- Logar\n 2- Cadastrar\n");
                 scanf("%d", &opcao);
-                while (getchar() != '\n')
-                    ;
+                while (getchar() != '\n');
+
             } while (opcao < 1 || opcao > 2);
 
             if (opcao == 1)
@@ -173,6 +175,7 @@ int main()
                 printf("5- Consultar um Usuário\n");
                 printf("6- Alterar Senha de um Usuário\n");
                 printf("7- Consultar uma Música\n");
+                printf("8- Alterar Dados de Músicas Cadastradas\n");
                 printf("10- Deslogar\n");
 
                 scanf("%d", &escolha);
@@ -199,11 +202,16 @@ int main()
             else if (escolha == 5){
                 consultarUsuario(usuario,contUsuarios);
             }
-            else if (escolha == 6){
+            else if (escolha == 6)
+            {
                 ADM_alterarSenhaUsuario(usuario,contUsuarios);
             } 
-            else if (escolha == 7){
+            else if (escolha == 7)
+            {
                 consultarMusica(musicas,qtdMusicas);
+            }
+            else if (escolha == 8){
+                alterarDadosMusica(musicas,qtdMusicas);
             }
             else if (escolha == 10)
             {
@@ -616,5 +624,75 @@ void consultarMusica(struct Musica musicas[], int qtdMusicas) {
 
     if (!encontrado) {
         printf("Música não encontrada.\n");
+    }
+}
+
+void alterarDadosMusica(struct Musica musicas[], int qtdMusicas)
+{
+    int codigo;
+    int encontrado = 0, tentarNovamente = 1;
+    int opcao;
+    char novoTitulo[TAM_TITULO];
+    char novoArtista[TAM_NOME];
+
+    while (tentarNovamente)
+    {
+        printf("-----------ALTERANDO DADOS DE MÚSICA-----------\n");
+        printf("Informe o código da música:\n");
+        scanf("%d", &codigo);
+        while (getchar() != '\n');
+
+        for (int i = 0; i < qtdMusicas; i++)
+        {
+            if (musicas[i].codigo == codigo)
+            {
+                printf("-----------MÚSICA ENCONTRADA!!-----------\n");
+                printf("Título atual: %s\n", musicas[i].titulo);
+                printf("Artista atual: %s\n", musicas[i].artista);
+                
+                do
+                {
+                    printf("Deseja alterar o título da música?\n 1- Sim\n 2- Não\n");
+                    scanf("%d", &opcao);
+                } while (opcao < 1 || opcao > 2);
+
+                if (opcao == 1)
+                {
+                    printf("Informe o novo título da música:\n");
+                    lerString(novoTitulo, TAM_TITULO);
+                    strcpy(musicas[i].titulo, novoTitulo);
+                    printf("Título da música atualizado com sucesso!!\n");
+                }
+
+                do
+                {
+                    printf("Deseja alterar o artista da música?\n 1- Sim\n 2- Não\n");
+                    scanf("%d", &opcao);
+                } while (opcao < 1 || opcao > 2);
+
+                if (opcao == 1)
+                {
+                    printf("Informe o novo nome do artista:\n");
+                    lerString(novoArtista, TAM_NOME);
+                    strcpy(musicas[i].artista, novoArtista);
+                    printf("Artista da música atualizado com sucesso!!\n");
+                }
+
+                encontrado = 1;
+                tentarNovamente = 0;
+                break;
+            }
+        }
+
+        if (!encontrado)
+        {
+            printf("Música não encontrada.\n");
+            printf("Deseja buscar outra música?\n 1- Sim\n 2- Não\n");
+            scanf("%d", &opcao);
+            if (opcao != 1)
+            {
+                tentarNovamente = 0;
+            }
+        }
     }
 }

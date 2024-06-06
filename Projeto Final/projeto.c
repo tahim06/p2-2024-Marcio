@@ -50,6 +50,7 @@ void listarPlaylists(struct Usuario usuario[], int qtdUsuarios, struct Musica mu
 char *buscarTituloMusica(struct Musica musicas[], int qtdMusicas, int codigo);
 void cadastrarMusicas(struct Musica musicas[], int *qtdMusicas);
 void consultarUsuario(struct Usuario usuario[], int qtdUsuarios);
+void ADM_alterarSenhaUsuario(struct Usuario *usuario[],int qtdUsuarios);
 
 int main()
 {
@@ -188,6 +189,9 @@ int main()
             else if (escolha == 5){
                 consultarUsuario(usuario,contUsuarios);
             }
+            else if (escolha == 6){
+                ADM_alterarSenhaUsuario(usuario,contUsuarios);
+            }
             else if (escolha == 9)
             {
                 logadoAdm = 0;
@@ -197,8 +201,8 @@ int main()
 
         while (logadoUsuario)
         {
-            // Placeholder para funcionalidades do usuário
-            // Por agora, apenas desloga o usuário imediatamente
+            // Aqui vão ter funcionalidades do usuário
+            // apenas desloga o usuário imediatamente por enquanto
             logadoUsuario = 0;
         }
     }

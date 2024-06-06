@@ -479,3 +479,66 @@ void consultarUsuario(struct Usuario usuario[], int qtdUsuarios)
     }
 }
 
+void ADM_alterarSenhaUsuario(struct Usuario *usuario[],int qtdUsuarios){
+    int codigo;
+    int encontrado = 0, tentarNovamente = 1;
+    int opcao, opcao2;
+    char senha1[TAM_SENHA];
+    char confirmarSenha[TAM_SENHA];
+
+    while(tentarNovamente){
+        printf("-----------ALTERANDO SENHA DE USUÁRIO-----------\n");
+        printf("Informe o código do usuário:\n");
+        scanf("%d", &codigo);
+        while (getchar() != '\n');
+
+        for (int i = 0; i < qtdUsuarios; i++){
+            if (usuario[i]->codigo == codigo){
+                printf("-----------USUÁRIO ENCONTRADO!!-----------\n");
+                printf("Nome: %s\n", usuario[i]->nome);
+                do{ 
+                    printf("Deseja alterar a senha desse Usuário?\n 1- Sim\n 2- Não\n");
+                    scanf("%d",&opcao);
+                }while(opcao < 1 || opcao > 2);
+            
+                printf("\n");
+                encontrado = 1;
+                
+                if(opcao == 1){
+                    do{
+                        printf("Informe a nova senha:\n");
+                        lerString(senha1,TAM_SENHA);
+                        printf("Informe novamente a nova senha:\n");
+                        lerString(confirmarSenha,TAM_SENHA);
+                        if(strcmp(senha1,confirmarSenha) != 0){
+                            printf("Senhas diferentes, digite novamente!\n");
+                        }
+                    }while(strcmp(senha1,confirmarSenha) != 0);
+
+                    strcpy(usuario[i]->senha,senha1);
+                    printf("Senha Atualizada com Sucesso!!\n \n");
+                    tentarNovamente = 0;
+                    break;
+                }else{
+                    printf("Senha não atualizada e operação finalizada!!\n \n");
+                    printf("Deseja buscar outro Usuario?\n 1- Sim\n 2- Não\n");
+                    scanf("%d", &opcao2);
+                    if(opcao2 == 1){
+                        tentarNovamente = 1;
+                        break;
+                    }
+                    else{
+                        tentarNovamente = 0;
+                        break;
+                    }
+                }
+                
+            }
+        }
+        if (!encontrado)
+        {
+        printf("Usuário não encontrado.\n");
+        }
+    	
+    }
+}

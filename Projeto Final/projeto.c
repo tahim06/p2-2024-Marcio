@@ -811,7 +811,6 @@ void excluirMusica(struct Musica musicas[], int *qtdMusicas, struct Usuario usua
     scanf("%d", &codigoMusica);
     while (getchar() != '\n');
 
-    // Remover a música do array de músicas
     for (int i = 0; i < *qtdMusicas; i++) {
         if (musicas[i].codigo == codigoMusica) {
             for (int j = i; j < *qtdMusicas - 1; j++) {
@@ -828,7 +827,6 @@ void excluirMusica(struct Musica musicas[], int *qtdMusicas, struct Usuario usua
         return;
     }
 
-    // Remover a música de todas as playlists
     for (int i = 0; i < qtdUsuarios; i++) {
         for (int j = 0; j < usuarios[i].qtdPlaylists; j++) {
             int novaQtdMusicas = usuarios[i].playlists[j].qtdMusicas;

@@ -51,6 +51,7 @@ char *buscarTituloMusica(struct Musica musicas[], int qtdMusicas, int codigo);
 void cadastrarMusicas(struct Musica musicas[], int *qtdMusicas);
 void consultarUsuario(struct Usuario usuario[], int qtdUsuarios);
 void ADM_alterarSenhaUsuario(struct Usuario *usuario[],int qtdUsuarios);
+void consultarMusica(struct Musica musicas[], int qtdMusicas);
 
 int main()
 {
@@ -164,7 +165,16 @@ int main()
             int escolha;
             do
             {
-                printf("Escolha uma ação:\n 1- Listar Usuários\n 2- Listar Músicas\n 3- Listar Playlists\n  4- Cadastrar Música\n 5- Consultar um Usuário\n 9- Deslogar\n");
+                printf("Escolha uma ação:\n");
+                printf("1- Listar Usuários\n");
+                printf("2- Listar Músicas\n");
+                printf("3- Listar Playlists\n");
+                printf("4- Cadastrar Música\n");
+                printf("5- Consultar um Usuário\n");
+                printf("6- Alterar Senha de um Usuário\n");
+                printf("7- Consultar uma Música\n");
+                printf("10- Deslogar\n");
+
                 scanf("%d", &escolha);
                 while (getchar() != '\n')
                     ;
@@ -191,8 +201,11 @@ int main()
             }
             else if (escolha == 6){
                 ADM_alterarSenhaUsuario(usuario,contUsuarios);
+            } 
+            else if (escolha == 7){
+                consultarMusica(musicas,qtdMusicas);
             }
-            else if (escolha == 9)
+            else if (escolha == 10)
             {
                 logadoAdm = 0;
                 break;
@@ -391,7 +404,7 @@ void consultarUsuario(struct Usuario usuario[], int qtdUsuarios)
             ;
     } while (opcao < 1 || opcao > 3);
 
-    int encontrado = 0; // Adicionando uma variável para controlar se o usuário foi encontrado
+    int encontrado = 0;
 
     if (opcao == 1)
     {
@@ -544,5 +557,64 @@ void ADM_alterarSenhaUsuario(struct Usuario *usuario[],int qtdUsuarios){
         printf("Usuário não encontrado.\n");
         }
     	
+    }
+}
+void consultarMusica(struct Musica musicas[], int qtdMusicas) {
+    int opcao;
+    do {
+        printf("Como deseja buscar a música?\n 1- Por código\n 2- Por parte do título\n 3- Por parte do nome do artista\n");
+        scanf("%d", &opcao);
+        while (getchar() != '\n');
+    } while (opcao < 1 || opcao > 3);
+
+    int encontrado = 0;
+
+    if (opcao == 1) {
+        int codigo;
+        printf("Informe o código da música: ");
+        scanf("%d", &codigo);
+        while (getchar() != '\n');
+
+        for (int i = 0; i < qtdMusicas; i++) {
+            if (musicas[i].codigo == codigo) {
+                printf("-----------MÚSICA ENCONTRADA-----------\n");
+                printf("Título: %s\n", musicas[i].titulo);
+                printf("Artista: %s\n", musicas[i].artista);
+                printf("Código: %d\n", musicas[i].codigo);
+                encontrado = 1;
+            }
+        }
+    } else if (opcao == 2) {
+        char parteTitulo[TAM_TITULO];
+        printf("Informe parte do título da música: ");
+        lerString(parteTitulo, TAM_TITULO);
+
+        for (int i = 0; i < qtdMusicas; i++) {
+            if (strstr(musicas[i].titulo, parteTitulo) != NULL) {
+                printf("-----------MÚSICA ENCONTRADA-----------\n");
+                printf("Título: %s\n", musicas[i].titulo);
+                printf("Artista: %s\n", musicas[i].artista);
+                printf("Código: %d\n", musicas[i].codigo);
+                encontrado = 1;
+            }
+        }
+    } else if (opcao == 3) {
+        char parteArtista[TAM_NOME];
+        printf("Informe parte do nome do artista: ");
+        lerString(parteArtista, TAM_NOME);
+
+        for (int i = 0; i < qtdMusicas; i++) {
+            if (strstr(musicas[i].artista, parteArtista) != NULL) {
+                printf("-----------MÚSICA ENCONTRADA-----------\n");
+                printf("Título: %s\n", musicas[i].titulo);
+                printf("Artista: %s\n", musicas[i].artista);
+                printf("Código: %d\n", musicas[i].codigo);
+                encontrado = 1;
+            }
+        }
+    }
+
+    if (!encontrado) {
+        printf("Música não encontrada.\n");
     }
 }

@@ -58,6 +58,7 @@ void excluirMusica(struct Musica musicas[], int *qtdMusicas, struct Usuario usua
 void dados_do_usuario_atual(struct Usuario usuario[], int posicao);
 void alterarSenha_Usuario(struct Usuario usuario[], int posicao);
 void alterarNome_Usuario(struct Usuario usuario[], int posicao);
+void alterarLogin_Usuario(struct Usuario usuario[], int posicao);
 
 int main()
 {
@@ -243,7 +244,7 @@ int main()
                 printf("1- Ver meus Dados \n");
                 printf("2- Alterar Senha \n");
                 printf("3- Alterar Nome de Usuário \n");
-                printf("4- \n");
+                printf("4- Alterar Login \n");
                 printf("5- \n");
                 printf("6- \n");
                 printf("7- \n");
@@ -267,6 +268,9 @@ int main()
             }
             else if(escolha == 3){
                 alterarNome_Usuario(usuario,posicao_usuario);
+            }
+            else if(escolha == 4){
+                alterarLogin_Usuario(usuario,posicao_usuario);
             }
         }
     }
@@ -929,7 +933,9 @@ void alterarSenha_Usuario(struct Usuario usuario[], int posicao) {
                 if (opcao2 == 2) {
                     printf("Senha não atualizada e operação finalizada!!\n \n");
                     tentarNovamente = 0;
-                }
+                }else[
+                    tentarNovamente = 1;
+                ]
             }
         } else {
             printf("Senha não atualizada e operação finalizada!!\n \n");
@@ -950,7 +956,7 @@ void alterarNome_Usuario(struct Usuario usuario[], int posicao) {
         do {
             printf("Deseja alterar o nome desse Usuário?\n 1- Sim\n 2- Não\n");
             scanf("%d", &opcao);
-            while (getchar() != '\n'); // Limpa o buffer de entrada
+            while (getchar() != '\n'); 
         } while (opcao < 1 || opcao > 2);
 
         printf("\n");
@@ -969,11 +975,13 @@ void alterarNome_Usuario(struct Usuario usuario[], int posicao) {
                 do {
                     printf("Senha Incorreta!!\n Deseja Tentar Novamente?\n 1- Sim\n 2- Não\n");
                     scanf("%d", &opcao2);
-                    while (getchar() != '\n'); // Limpa o buffer de entrada
+                    while (getchar() != '\n'); 
                 } while (opcao2 < 1 || opcao2 > 2);
                 if (opcao2 == 2) {
                     printf("Nome não atualizado e operação finalizada!!\n \n");
                     tentarNovamente = 0;
+                }else{
+                    tentarNovamente = 1;
                 }
             }
         } else {
@@ -983,4 +991,50 @@ void alterarNome_Usuario(struct Usuario usuario[], int posicao) {
     }
 }
 
+void alterarLogin_Usuario(struct Usuario usuario[], int posicao) {
+    int tentarNovamente = 1;
+    int opcao, opcao2;
+    char senha[TAM_SENHA];
+    char novoLogin[TAM_LOGIN];
+
+    while (tentarNovamente) {
+        printf("-----------ALTERANDO LOGIN DE USUÁRIO-----------\n");
+
+        do {
+            printf("Deseja alterar o login desse Usuário?\n 1- Sim\n 2- Não\n");
+            scanf("%d", &opcao);
+            while (getchar() != '\n'); 
+        } while (opcao < 1 || opcao > 2);
+
+        printf("\n");
+
+        if (opcao == 1) {
+            printf("Digite sua senha atual:\n");
+            lerString(senha, TAM_SENHA);
+            if (strcmp(senha, usuario[posicao].senha) == 0) {
+                printf("Informe o novo login:\n");
+                lerString(novoLogin, TAM_LOGIN);
+
+                strcpy(usuario[posicao].login, novoLogin);
+                printf("Login Atualizado com Sucesso!!\n \n");
+                tentarNovamente = 0;
+            } else {
+                do {
+                    printf("Senha Incorreta!!\n Deseja Tentar Novamente?\n 1- Sim\n 2- Não\n");
+                    scanf("%d", &opcao2);
+                    while (getchar() != '\n'); 
+                } while (opcao2 < 1 || opcao2 > 2);
+                if (opcao2 == 2) {
+                    printf("Login não atualizado e operação finalizada!!\n \n");
+                    tentarNovamente = 0;
+                }else{
+                    tentarNovamente = 1;
+                }
+            }
+        } else {
+            printf("Login não atualizado e operação finalizada!!\n \n");
+            tentarNovamente = 0;
+        }
+    }
+}
         

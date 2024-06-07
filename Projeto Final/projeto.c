@@ -56,6 +56,8 @@ void alterarDadosMusica(struct Musica musicas[], int qtdMusicas);
 void consultarPlaylist(struct Usuario usuario[], int qtdUsuarios, struct Musica musicas[], int qtdMusicas);
 void excluirMusica(struct Musica musicas[], int *qtdMusicas, struct Usuario usuarios[], int qtdUsuarios);
 void dados_do_usuario_atual(struct Usuario usuario[], int posicao);
+void alterarSenha_Usuario(struct Usuario usuario[], int posicao);
+void alterarNome_Usuario(struct Usuario usuario[], int posicao);
 
 int main()
 {
@@ -238,9 +240,9 @@ int main()
         {
             do{
                 printf("Escolha uma ação:\n");
-                printf("1- \n");
-                printf("2- \n");
-                printf("3- \n");
+                printf("1- Ver meus Dados \n");
+                printf("2- Alterar Senha \n");
+                printf("3- Alterar Nome de Usuário \n");
                 printf("4- \n");
                 printf("5- \n");
                 printf("6- \n");
@@ -259,6 +261,12 @@ int main()
             }
             else if(escolha == 1){
                 dados_do_usuario_atual(usuario,posicao_usuario);
+            }
+            else if(escolha == 2){
+                alterarSenha_Usuario(usuario,posicao_usuario);
+            }
+            else if(escolha == 3){
+                alterarNome_Usuario(usuario,posicao_usuario);
             }
         }
     }
@@ -880,3 +888,99 @@ void dados_do_usuario_atual(struct Usuario usuario[], int posicao)
     }
 }
 
+void alterarSenha_Usuario(struct Usuario usuario[], int posicao) {
+    int tentarNovamente = 1;
+    int opcao, opcao2;
+    char senha[TAM_SENHA];
+    char senha1[TAM_SENHA];
+    char confirmarSenha[TAM_SENHA];
+
+    while (tentarNovamente) {
+        printf("-----------ALTERANDO SENHA DE USUÁRIO-----------\n");
+
+        do {
+            printf("Deseja alterar a senha desse Usuário?\n 1- Sim\n 2- Não\n");
+            scanf("%d", &opcao);
+            while (getchar() != '\n');
+        } while (opcao < 1 || opcao > 2);
+
+        printf("\n");
+
+        if (opcao == 1) {
+            printf("Digite sua senha atual:\n");
+            lerString(senha, TAM_SENHA);
+            if (strcmp(senha, usuario[posicao].senha) == 0) {
+                do {
+                    printf("Informe a nova senha:\n");
+                    lerString(senha1, TAM_SENHA);
+                    printf("Informe novamente a nova senha:\n");
+                    lerString(confirmarSenha, TAM_SENHA);
+                } while (strcmp(senha1, confirmarSenha) != 0);
+
+                strcpy(usuario[posicao].senha, senha1);
+                printf("Senha Atualizada com Sucesso!!\n \n");
+                tentarNovamente = 0;
+            } else {
+                do {
+                    printf("Senha Incorreta!!\n Deseja Tentar Novamente?\n 1- Sim\n 2- Não\n");
+                    scanf("%d", &opcao2);
+                    while (getchar() != '\n');
+                } while (opcao2 < 1 || opcao2 > 2);
+                if (opcao2 == 2) {
+                    printf("Senha não atualizada e operação finalizada!!\n \n");
+                    tentarNovamente = 0;
+                }
+            }
+        } else {
+            printf("Senha não atualizada e operação finalizada!!\n \n");
+            tentarNovamente = 0;
+        }
+    }
+}
+
+void alterarNome_Usuario(struct Usuario usuario[], int posicao) {
+    int tentarNovamente = 1;
+    int opcao, opcao2;
+    char senha[TAM_SENHA];
+    char novoNome[TAM_NOME];
+
+    while (tentarNovamente) {
+        printf("-----------ALTERANDO NOME DE USUÁRIO-----------\n");
+
+        do {
+            printf("Deseja alterar o nome desse Usuário?\n 1- Sim\n 2- Não\n");
+            scanf("%d", &opcao);
+            while (getchar() != '\n'); // Limpa o buffer de entrada
+        } while (opcao < 1 || opcao > 2);
+
+        printf("\n");
+
+        if (opcao == 1) {
+            printf("Digite sua senha atual:\n");
+            lerString(senha, TAM_SENHA);
+            if (strcmp(senha, usuario[posicao].senha) == 0) {
+                printf("Informe o novo nome:\n");
+                lerString(novoNome, TAM_NOME);
+
+                strcpy(usuario[posicao].nome, novoNome);
+                printf("Nome Atualizado com Sucesso!!\n \n");
+                tentarNovamente = 0;
+            } else {
+                do {
+                    printf("Senha Incorreta!!\n Deseja Tentar Novamente?\n 1- Sim\n 2- Não\n");
+                    scanf("%d", &opcao2);
+                    while (getchar() != '\n'); // Limpa o buffer de entrada
+                } while (opcao2 < 1 || opcao2 > 2);
+                if (opcao2 == 2) {
+                    printf("Nome não atualizado e operação finalizada!!\n \n");
+                    tentarNovamente = 0;
+                }
+            }
+        } else {
+            printf("Nome não atualizado e operação finalizada!!\n \n");
+            tentarNovamente = 0;
+        }
+    }
+}
+
+        

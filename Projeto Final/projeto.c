@@ -933,9 +933,9 @@ void alterarSenha_Usuario(struct Usuario usuario[], int posicao) {
                 if (opcao2 == 2) {
                     printf("Senha não atualizada e operação finalizada!!\n \n");
                     tentarNovamente = 0;
-                }else[
+                }else{
                     tentarNovamente = 1;
-                ]
+                }
             }
         } else {
             printf("Senha não atualizada e operação finalizada!!\n \n");

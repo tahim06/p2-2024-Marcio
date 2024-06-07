@@ -50,11 +50,12 @@ void listarPlaylists(struct Usuario usuario[], int qtdUsuarios, struct Musica mu
 char *buscarTituloMusica(struct Musica musicas[], int qtdMusicas, int codigo);
 void cadastrarMusicas(struct Musica musicas[], int *qtdMusicas);
 void consultarUsuario(struct Usuario usuario[], int qtdUsuarios);
-void ADM_alterarSenhaUsuario(struct Usuario *usuario[],int qtdUsuarios);
+void ADM_alterarSenhaUsuario(struct Usuario usuario[],int qtdUsuarios);
 void consultarMusica(struct Musica musicas[], int qtdMusicas);
 void alterarDadosMusica(struct Musica musicas[], int qtdMusicas);
 void consultarPlaylist(struct Usuario usuario[], int qtdUsuarios, struct Musica musicas[], int qtdMusicas);
 void excluirMusica(struct Musica musicas[], int *qtdMusicas, struct Usuario usuarios[], int qtdUsuarios);
+void dados_do_usuario_atual(struct Usuario usuario[], int posicao);
 
 int main()
 {
@@ -164,9 +165,9 @@ int main()
             }
         }
 
+        int escolha;
         while (logadoAdm)
         {
-            int escolha;
             do
             {
                 printf("Escolha uma ação:\n");
@@ -235,9 +236,30 @@ int main()
 
         while (logadoUsuario)
         {
-            // Aqui vão ter funcionalidades do usuário
-            // apenas desloga o usuário imediatamente por enquanto
-            logadoUsuario = 0;
+            do{
+                printf("Escolha uma ação:\n");
+                printf("1- \n");
+                printf("2- \n");
+                printf("3- \n");
+                printf("4- \n");
+                printf("5- \n");
+                printf("6- \n");
+                printf("7- \n");
+                printf("8- \n");
+                printf("9- \n");
+                printf("10- \n");
+                printf("11- Deslogar\n");
+                scanf("%d", &escolha);
+                while (getchar() != '\n');
+            }while (escolha < 1 || escolha > 11);
+
+            if(escolha == 11){
+                logadoUsuario = 0;
+                break;
+            }
+            else if(escolha == 1){
+                dados_do_usuario_atual(usuario,posicao_usuario);
+            }
         }
     }
 
@@ -281,10 +303,10 @@ int loginUsuario(struct Usuario usuario[], int *contUsuarios, int *posicao)
     char senha[TAM_SENHA];
     int encontrado = 0;
     printf("-----------LOGIN-----------\n \n");
-    printf("Digite seu Login: ");
+    printf("Digite seu Login:\n ");
     lerString(login, TAM_LOGIN);
 
-    printf("Digite sua senha: ");
+    printf("Digite sua senha:\n ");
     lerString(senha, TAM_SENHA);
 
     for (int i = 0; i < *contUsuarios; i++)
@@ -313,16 +335,14 @@ void cadastro(struct Usuario usuario[], int *contUsuarios, int *posicao)
     printf("Informe o Login:\n");
     lerString(novoUsuario.login, TAM_LOGIN);
 
+    printf("\n");
     do
     {
         printf("Informe a Senha:\n");
         lerString(novoUsuario.senha, TAM_SENHA);
         printf("Informe novamente a mesma senha:\n");
         lerString(confirmarSenha, TAM_SENHA);
-        if (strcmp(novoUsuario.senha, confirmarSenha) != 0)
-        {
-            printf("Senhas diferentes!!\n");
-        }
+        
     } while (strcmp(novoUsuario.senha, confirmarSenha) != 0);
 
     novoUsuario.codigo = *contUsuarios + 1;
@@ -334,7 +354,7 @@ void cadastro(struct Usuario usuario[], int *contUsuarios, int *posicao)
     (*contUsuarios)++;
     *posicao = *contUsuarios - 1;
 
-    printf("Cadastro realizado com sucesso!\n Conta Cadastrada foi Logada automaticamente.\n");
+    printf("Cadastro realizado com sucesso!\n Conta Cadastrada foi Logada automaticamente.\n \n");
 }
 
 void listarUsuarios(struct Usuario usuario[], int qtdUsuarios)
@@ -380,7 +400,7 @@ char *buscarTituloMusica(struct Musica musicas[], int qtdMusicas, int codigo)
             return musicas[i].titulo;
         }
     }
-    return "Música não encontrada";
+    return "Música não encontrada\n";
 }
 
 void listarMusicas(struct Musica musicas[], int qtdMusicas)
@@ -393,6 +413,7 @@ void listarMusicas(struct Musica musicas[], int qtdMusicas)
         printf("Título: %s\n", musicas[i].titulo);
         printf("Artista: %s\n", musicas[i].artista);
     }
+    printf("\n");
 }
 
 void cadastrarMusicas(struct Musica musicas[], int *qtdMusicas)
@@ -406,11 +427,11 @@ void cadastrarMusicas(struct Musica musicas[], int *qtdMusicas)
         lerString(musicas[*qtdMusicas].artista, TAM_NOME);
         musicas[*qtdMusicas].codigo = *qtdMusicas + 1;
         *qtdMusicas += 1;
-        printf("Música Cadastrada!!\n Código da Música: %d", *qtdMusicas);
+        printf("Música Cadastrada!!\n Código da Música: %d\n \n", *qtdMusicas);
     }
     else
     {
-        printf("Não é possível adicionar mais músicas, lista de Músicas Cheia.\n Exclua alguma Música para cadastrar outra Música!!\n");
+        printf("Não é possível adicionar mais músicas, lista de Músicas Cheia.\n Exclua alguma Música para cadastrar outra Música!!\n \n");
     }
 }
 
@@ -430,7 +451,7 @@ void consultarUsuario(struct Usuario usuario[], int qtdUsuarios)
     if (opcao == 1)
     {
         int codigo;
-        printf("Informe o código do usuário: ");
+        printf("Informe o código do usuário:\n ");
         scanf("%d", &codigo);
         while (getchar() != '\n')
             ;
@@ -459,7 +480,7 @@ void consultarUsuario(struct Usuario usuario[], int qtdUsuarios)
     else if (opcao == 2)
     {
         char login[TAM_LOGIN];
-        printf("Informe o login do usuário: ");
+        printf("Informe o login do usuário:\n ");
         lerString(login, TAM_LOGIN);
 
         for (int i = 0; i < qtdUsuarios; i++)
@@ -475,9 +496,9 @@ void consultarUsuario(struct Usuario usuario[], int qtdUsuarios)
                 printf("Código das Playlists Favoritadas: ");
                 for (int j = 0; j < usuario[i].qtdPlaylistsFav; j++)
                 {
-                    printf("%d ", usuario[i].playlistsFav[j]);
+                    printf("%d\n ", usuario[i].playlistsFav[j]);
                 }
-                printf("\n");
+                printf("\n \n");
                 encontrado = 1;
                 
             }
@@ -486,7 +507,7 @@ void consultarUsuario(struct Usuario usuario[], int qtdUsuarios)
     else if (opcao == 3)
     {
         char parteNome[TAM_NOME];
-        printf("Informe parte do nome do usuário: ");
+        printf("Informe parte do nome do usuário:\n ");
         lerString(parteNome, TAM_NOME);
 
         for (int i = 0; i < qtdUsuarios; i++)
@@ -502,7 +523,7 @@ void consultarUsuario(struct Usuario usuario[], int qtdUsuarios)
                 printf("Código das Playlists Favoritadas: ");
                 for (int j = 0; j < usuario[i].qtdPlaylistsFav; j++)
                 {
-                    printf("%d ", usuario[i].playlistsFav[j]);
+                    printf("%d\n ", usuario[i].playlistsFav[j]);
                 }
                 printf("\n");
                 encontrado = 1;
@@ -513,11 +534,11 @@ void consultarUsuario(struct Usuario usuario[], int qtdUsuarios)
 
     if (!encontrado)
     {
-        printf("Usuário não encontrado.\n");
+        printf("Usuário não encontrado.\n \n");
     }
 }
 
-void ADM_alterarSenhaUsuario(struct Usuario *usuario[],int qtdUsuarios){
+void ADM_alterarSenhaUsuario(struct Usuario usuario[],int qtdUsuarios){
     int codigo;
     int encontrado = 0, tentarNovamente = 1;
     int opcao, opcao2;
@@ -531,9 +552,9 @@ void ADM_alterarSenhaUsuario(struct Usuario *usuario[],int qtdUsuarios){
         while (getchar() != '\n');
 
         for (int i = 0; i < qtdUsuarios; i++){
-            if (usuario[i]->codigo == codigo){
+            if (usuario[i].codigo == codigo){
                 printf("-----------USUÁRIO ENCONTRADO!!-----------\n");
-                printf("Nome: %s\n", usuario[i]->nome);
+                printf("Nome: %s\n", usuario[i].nome);
                 do{ 
                     printf("Deseja alterar a senha desse Usuário?\n 1- Sim\n 2- Não\n");
                     scanf("%d",&opcao);
@@ -553,7 +574,7 @@ void ADM_alterarSenhaUsuario(struct Usuario *usuario[],int qtdUsuarios){
                         }
                     }while(strcmp(senha1,confirmarSenha) != 0);
 
-                    strcpy(usuario[i]->senha,senha1);
+                    strcpy(usuario[i].senha,senha1);
                     printf("Senha Atualizada com Sucesso!!\n \n");
                     tentarNovamente = 0;
                     break;
@@ -580,6 +601,7 @@ void ADM_alterarSenhaUsuario(struct Usuario *usuario[],int qtdUsuarios){
     	
     }
 }
+
 void consultarMusica(struct Musica musicas[], int qtdMusicas) {
     int opcao;
     do {
@@ -592,7 +614,7 @@ void consultarMusica(struct Musica musicas[], int qtdMusicas) {
 
     if (opcao == 1) {
         int codigo;
-        printf("Informe o código da música: ");
+        printf("Informe o código da música:\n ");
         scanf("%d", &codigo);
         while (getchar() != '\n');
 
@@ -605,9 +627,10 @@ void consultarMusica(struct Musica musicas[], int qtdMusicas) {
                 encontrado = 1;
             }
         }
+        printf("\n");
     } else if (opcao == 2) {
         char parteTitulo[TAM_TITULO];
-        printf("Informe parte do título da música: ");
+        printf("Informe parte do título da música:\n ");
         lerString(parteTitulo, TAM_TITULO);
 
         for (int i = 0; i < qtdMusicas; i++) {
@@ -619,9 +642,10 @@ void consultarMusica(struct Musica musicas[], int qtdMusicas) {
                 encontrado = 1;
             }
         }
+        printf("\n");
     } else if (opcao == 3) {
         char parteArtista[TAM_NOME];
-        printf("Informe parte do nome do artista: ");
+        printf("Informe parte do nome do artista:\n ");
         lerString(parteArtista, TAM_NOME);
 
         for (int i = 0; i < qtdMusicas; i++) {
@@ -633,10 +657,11 @@ void consultarMusica(struct Musica musicas[], int qtdMusicas) {
                 encontrado = 1;
             }
         }
+        printf("\n");
     }
 
     if (!encontrado) {
-        printf("Música não encontrada.\n");
+        printf("Música não encontrada.\n \n");
     }
 }
 
@@ -674,7 +699,7 @@ void alterarDadosMusica(struct Musica musicas[], int qtdMusicas)
                     printf("Informe o novo título da música:\n");
                     lerString(novoTitulo, TAM_TITULO);
                     strcpy(musicas[i].titulo, novoTitulo);
-                    printf("Título da música atualizado com sucesso!!\n");
+                    printf("Título da música atualizado com sucesso!!\n \n");
                 }
 
                 do
@@ -722,7 +747,7 @@ void consultarPlaylist(struct Usuario usuario[], int qtdUsuarios, struct Musica 
 
     if (opcao == 1) {
         int codigo;
-        printf("Informe o código da playlist: ");
+        printf("Informe o código da playlist:\n ");
         scanf("%d", &codigo);
         while (getchar() != '\n');
 
@@ -744,6 +769,7 @@ void consultarPlaylist(struct Usuario usuario[], int qtdUsuarios, struct Musica 
                 }
             }
         }
+        printf("\n");
     } else if (opcao == 2) {
         char parteTitulo[TAM_TITULO];
         printf("Informe parte do título da playlist: ");
@@ -767,6 +793,7 @@ void consultarPlaylist(struct Usuario usuario[], int qtdUsuarios, struct Musica 
                 }
             }
         }
+        printf("\n");
     } else if (opcao == 3) {
         int codigoMusica;
         printf("Informe o código da música: ");
@@ -793,21 +820,19 @@ void consultarPlaylist(struct Usuario usuario[], int qtdUsuarios, struct Musica 
                 }
             }
         }
+        printf("\n");
     }
 
     if (!encontrado) {
-        printf("Playlist não encontrada.\n");
+        printf("Playlist não encontrada.\n \n");
     }
 }
-
-#include <stdio.h>
-#include <string.h>
 
 void excluirMusica(struct Musica musicas[], int *qtdMusicas, struct Usuario usuarios[], int qtdUsuarios) {
     int codigoMusica;
     int encontrado = 0;
 
-    printf("Digite o código da música que deseja remover: ");
+    printf("Digite o código da música que deseja remover:\n ");
     scanf("%d", &codigoMusica);
     while (getchar() != '\n');
 
@@ -843,5 +868,15 @@ void excluirMusica(struct Musica musicas[], int *qtdMusicas, struct Usuario usua
         }
     }
 
-    printf("Música removida com sucesso.\n");
+    printf("Música removida com sucesso.\n \n");
 }
+
+void dados_do_usuario_atual(struct Usuario usuario[], int posicao)
+{
+    {
+        printf("Nome: %s\n", usuario[posicao].nome);
+        printf("Login: %s\n", usuario[posicao].login);
+        printf("Código: %d\n", usuario[posicao].codigo);
+    }
+}
+

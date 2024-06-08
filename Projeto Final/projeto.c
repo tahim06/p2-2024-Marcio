@@ -65,7 +65,7 @@ void listarPlaylists_do_Usuario(struct Usuario usuario[], int posicaoUsuario, st
 void listarTodasPlaylistsExcetoUsuario(struct Usuario usuario[], int posicaoUsuario, int qtdUsuarios, struct Musica musicas[], int qtdMusicas);
 void consultarPlaylists(struct Usuario usuario[], int posicaoUsuario, int qtdUsuarios, struct Musica musicas[], int qtdMusicas);
 void inserirMusicaPlaylist(struct Usuario usuario[], int posicaoUsuario, int qtdUsuarios, struct Musica musicas[], int qtdMusicas);
-
+void cadastrarPlaylist(struct Usuario usuario[], int posicaoUsuario, int qtdUsuarios, struct Musica musicas[],int *ultimoCodigo, int qtdMusicas);
 
 int main()
 {
@@ -76,6 +76,7 @@ int main()
     int qtdMusicas = 0;
     int logadoAdm = 0, logadoUsuario = 0;
     int sair = 0;
+    int ultimoCodigoPlaylist = 0;
 
     while (!sair)
     {
@@ -258,12 +259,14 @@ int main()
                 printf("8- Listar Suas Playlists (Criadas e Favoritadas) \n");
                 printf("9- Listar Todas as Playlists de Outros Usuários\n");
                 printf("10- Consultar uma Playlist\n");
-                printf("11- Deslogar\n");
+                printf("11- Criar uma Playlist\n");
+                printf("12- Adicionar Música a uma Playlist\n");
+                printf("13- Deslogar\n");
                 scanf("%d", &escolha);
                 while (getchar() != '\n');
             }while (escolha < 1 || escolha > 11);
 
-            if(escolha == 11){
+            if(escolha == 13){
                 logadoUsuario = 0;
                 break;
             }
@@ -296,6 +299,12 @@ int main()
             }
             else if(escolha == 10){
                 consultarPlaylists(usuario,posicao_usuario,contUsuarios,musicas,qtdMusicas);
+            }
+            else if(escolha == 11){
+                cadastrarPlaylist(usuario,posicao_usuario,contUsuarios,musicas,&ultimoCodigoPlaylist,qtdMusicas);
+            }
+            else if(escolha == 12){
+                inserirMusicaPlaylist(usuario,posicao_usuario,contUsuarios,musicas,qtdMusicas);
             }
         }
     }
@@ -1286,24 +1295,24 @@ void inserirMusicaPlaylist(struct Usuario usuario[], int posicaoUsuario, int qtd
     usuario[posicaoUsuario].playlists[indicePlaylist].qtdMusicas = qtdMusicasPlaylist;
 }
 
-void cadastrarPlaylist(struct Usuario usuario[], int posicaoUsuario, int qtdUsuarios, struct Musica musicas[], int *qtdMusicas) {
+void cadastrarPlaylist(struct Usuario usuario[], int posicaoUsuario, int qtdUsuarios, struct Musica musicas[],int *ultimoCodigo, int qtdMusicas) {
     if (usuario[posicaoUsuario].qtdPlaylists >= TAM_PLAYLIST) {
         printf("Você atingiu o limite máximo de playlists que pode criar.\n");
         return;
     }
 
-    int codigoPlaylist = *qtdMusicas + 1;
+    int codigoPlaylist = *ultimoCodigo + 1;
 
     printf("Digite o título da playlist:\n");
     lerString(usuario[posicaoUsuario].playlists[usuario[posicaoUsuario].qtdPlaylists].titulo, TAM_TITULO);
 
-    inserirMusicaPlaylist(usuario, posicaoUsuario,qtdUsuarios,musicas,&qtdMusicas);
+    inserirMusicaPlaylist(usuario, posicaoUsuario,qtdUsuarios,musicas,qtdMusicas);
 
     usuario[posicaoUsuario].playlists[usuario[posicaoUsuario].qtdPlaylists].codigo = codigoPlaylist;
 
     usuario[posicaoUsuario].qtdPlaylists++;
 
-    *qtdMusicas += 1;
+    *ultimoCodigo += 1;
 
     printf("Playlist cadastrada com sucesso.\n");
 }

@@ -59,6 +59,7 @@ void dados_do_usuario_atual(struct Usuario usuario[], int posicao);
 void alterarSenha_Usuario(struct Usuario usuario[], int posicao);
 void alterarNome_Usuario(struct Usuario usuario[], int posicao);
 void alterarLogin_Usuario(struct Usuario usuario[], int posicao);
+void listarUsuarios_usuario(struct Usuario usuario[], int qtdUsuarios, int posicao);
 
 int main()
 {
@@ -245,7 +246,7 @@ int main()
                 printf("2- Alterar Senha \n");
                 printf("3- Alterar Nome de Usuário \n");
                 printf("4- Alterar Login \n");
-                printf("5- \n");
+                printf("5- Listar Tods os Usuários \n");
                 printf("6- \n");
                 printf("7- \n");
                 printf("8- \n");
@@ -271,6 +272,9 @@ int main()
             }
             else if(escolha == 4){
                 alterarLogin_Usuario(usuario,posicao_usuario);
+            }
+            else if(escolha == 5){
+                listarUsuarios_usuario(usuario,contUsuarios,posicao_usuario);
             }
         }
     }
@@ -1038,3 +1042,15 @@ void alterarLogin_Usuario(struct Usuario usuario[], int posicao) {
     }
 }
         
+void listarUsuarios_usuario(struct Usuario usuario[], int qtdUsuarios, int posicao)
+{
+    printf("-----------LISTA DE USUÁRIOS-----------\n");
+    for (int i = 0; i < qtdUsuarios; i++)
+    {
+        if(i == posicao){
+            i++;
+        }
+        printf("Usuário %d:\n", i + 1);
+        printf("Nome: %s\n \n", usuario[i].nome);
+    }
+}

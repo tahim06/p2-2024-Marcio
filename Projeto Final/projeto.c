@@ -53,7 +53,7 @@ void consultarUsuario(struct Usuario usuario[], int qtdUsuarios);
 void ADM_alterarSenhaUsuario(struct Usuario usuario[],int qtdUsuarios);
 void consultarMusica(struct Musica musicas[], int qtdMusicas);
 void alterarDadosMusica(struct Musica musicas[], int qtdMusicas);
-void consultarPlaylist(struct Usuario usuario[], int qtdUsuarios, struct Musica musicas[], int qtdMusicas);
+void consultarPlaylist_ADM(struct Usuario usuario[], int qtdUsuarios, struct Musica musicas[], int qtdMusicas);
 void excluirMusica(struct Musica musicas[], int *qtdMusicas, struct Usuario usuarios[], int qtdUsuarios);
 void dados_do_usuario_atual(struct Usuario usuario[], int posicao);
 void alterarSenha_Usuario(struct Usuario usuario[], int posicao);
@@ -229,7 +229,7 @@ int main()
             }
             else if (escolha == 9)
             {
-                consultarPlaylist(usuario,contUsuarios,musicas,qtdMusicas);
+                consultarPlaylist_ADM(usuario,contUsuarios,musicas,qtdMusicas);
             }
             else if(escolha == 10)
             {
@@ -255,7 +255,7 @@ int main()
                 printf("7- Consultar uma Música\n");
                 printf("8- Listar Suas Playlists (Criadas e Favoritadas) \n");
                 printf("9- Listar Todas as Playlists de Outros Usuários\n");
-                printf("10- \n");
+                printf("10- Consultar uma Playlist\n");
                 printf("11- Deslogar\n");
                 scanf("%d", &escolha);
                 while (getchar() != '\n');
@@ -291,6 +291,9 @@ int main()
             }
             else if(escolha == 9){
                 listarTodasPlaylistsExcetoUsuario(usuario,posicao_usuario,contUsuarios,musicas,qtdMusicas);
+            }
+            else if(escolha == 10){
+                consultarPlaylists(usuario,posicao_usuario,contUsuarios,musicas,qtdMusicas);
             }
         }
     }
@@ -767,7 +770,7 @@ void alterarDadosMusica(struct Musica musicas[], int qtdMusicas)
     }
 }
 
-void consultarPlaylist(struct Usuario usuario[], int qtdUsuarios, struct Musica musicas[], int qtdMusicas) {
+void consultarPlaylist_ADM(struct Usuario usuario[], int qtdUsuarios, struct Musica musicas[], int qtdMusicas) {
     int opcao;
     do {
         printf("Como deseja buscar a playlist?\n 1- Por código da playlist\n 2- Por parte do título da playlist\n 3- Por código de música\n");

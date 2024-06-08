@@ -62,6 +62,8 @@ void alterarLogin_Usuario(struct Usuario usuario[], int posicao);
 void listarUsuarios_usuario(struct Usuario usuario[], int qtdUsuarios, int posicao);
 void consultarUsuarios_porParteNome(struct Usuario usuario[], int qtdUsuarios);
 void listarPlaylists_do_Usuario(struct Usuario usuario[], int posicaoUsuario, struct Musica musicas[], int qtdMusicas);
+void listarTodasPlaylistsExcetoUsuario(struct Usuario usuario[], int posicaoUsuario, int qtdUsuarios, struct Musica musicas[], int qtdMusicas);
+void consultarPlaylists(struct Usuario usuario[], int posicaoUsuario, int qtdUsuarios, struct Musica musicas[], int qtdMusicas);
 
 int main()
 {
@@ -252,7 +254,7 @@ int main()
                 printf("6- Pesquisar Usuário\n");
                 printf("7- Consultar uma Música\n");
                 printf("8- Listar Suas Playlists (Criadas e Favoritadas) \n");
-                printf("9- \n");
+                printf("9- Listar Todas as Playlists de Outros Usuários\n");
                 printf("10- \n");
                 printf("11- Deslogar\n");
                 scanf("%d", &escolha);
@@ -286,6 +288,9 @@ int main()
             }
             else if(escolha == 8){
                 listarPlaylists_do_Usuario(usuario,posicao_usuario,musicas,qtdMusicas);
+            }
+            else if(escolha == 9){
+                listarTodasPlaylistsExcetoUsuario(usuario,posicao_usuario,contUsuarios,musicas,qtdMusicas);
             }
         }
     }
@@ -1130,3 +1135,101 @@ void listarPlaylists_do_Usuario(struct Usuario usuario[], int posicaoUsuario, st
     }
 }
 
+void listarTodasPlaylistsExcetoUsuario(struct Usuario usuario[], int posicaoUsuario, int qtdUsuarios, struct Musica musicas[], int qtdMusicas) {
+    printf("-----------TODAS AS PLAYLISTS EXCETO DO USUÁRIO-----------\n");
+
+    for (int i = 0; i < qtdUsuarios; i++) {
+        if (i != posicaoUsuario) { 
+            for (int j = 0; j < usuario[i].qtdPlaylists; j++) {
+                int codigoPlaylist = usuario[i].playlists[j].codigo;
+                int criadorPlaylist = usuario[i].codigo;
+                
+                int favoritada = 0;
+                for (int k = 0; k < usuario[posicaoUsuario].qtdPlaylistsFav; k++) {
+                    if (usuario[posicaoUsuario].playlistsFav[k] == codigoPlaylist) {
+                        favoritada = 1;
+                        break;
+                    }
+                }
+                if (!favoritada) {
+                    printf("-----------PLAYLIST-----------\n");
+                    printf("Título: %s\n", usuario[i].playlists[j].titulo);
+                    printf("Código: %d\n", codigoPlaylist);
+                    printf("Criador: %s\n", usuario[i].nome);
+                    printf("Músicas:\n");
+                    for (int k = 0; k < usuario[i].playlists[j].qtdMusicas; k++) {
+                        int codigoMusica = usuario[i].playlists[j].musicas[k];
+                        for (int l = 0; l < qtdMusicas; l++) {
+                            if (musicas[l].codigo == codigoMusica) {
+                                printf("- %s - %s\n", musicas[l].titulo, musicas[l].artista);
+                                break;
+                            }
+                        }
+                    }
+                    printf("\n");
+                }
+            }
+        }
+    }
+}
+
+void consultarPlaylists(struct Usuario usuario[], int posicaoUsuario, int qtdUsuarios, struct Musica musicas[], int qtdMusicas) {
+    int opcao;
+    do {
+        printf("Como deseja buscar a playlist?\n 1- Por código da playlist\n 2- Por parte do título da playlist\n 3- Por código de música\n");
+        scanf("%d", &opcao);
+        while (getchar() != '\n');
+    } while (opcao < 1 || opcao > 3);
+
+    int encontrado = 0;
+
+    if (opcao == 1) {
+        int codigo;
+        printf("Informe o código da playlist:\n ");
+        scanf("%d", &codigo);
+        while (getchar() != '\n');
+
+        for (int i = 0; i < qtdUsuarios; i++) {
+            for (int j = 0; j < usuario[i].qtdPlaylists; j++) {
+                if (usuario[i].playlists[j].codigo == codigo) {
+                    listarPlaylist(usuario[i].playlists[j], usuario[i].nome, musicas, qtdMusicas);
+                    encontrado = 1;
+                    break;
+                }
+            }
+        }
+    } else if (opcao == 2) {
+        char parteTitulo[TAM_TITULO];
+        printf("Informe parte do título da playlist: ");
+        lerString(parteTitulo, TAM_TITULO);
+
+        for (int i = 0; i < qtdUsuarios; i++) {
+            for (int j = 0; j < usuario[i].qtdPlaylists; j++) {
+                if (strstr(usuario[i].playlists[j].titulo, parteTitulo) != NULL) {
+                    listarPlaylist(usuario[i].playlists[j], usuario[i].nome, musicas, qtdMusicas);
+                    encontrado = 1;
+                }
+            }
+        }
+    } else if (opcao == 3) {
+        int codigoMusica;
+        printf("Informe o código da música: ");
+        scanf("%d", &codigoMusica);
+        while (getchar() != '\n');
+
+        for (int i = 0; i < qtdUsuarios; i++) {
+            for (int j = 0; j < usuario[i].qtdPlaylists; j++) {
+                for (int k = 0; k < usuario[i].playlists[j].qtdMusicas; k++) {
+                    if (usuario[i].playlists[j].musicas[k] == codigoMusica) {
+                        listarPlaylist(usuario[i].playlists[j], usuario[i].nome, musicas, qtdMusicas);
+                        encontrado = 1;
+                    }
+                }
+            }
+        }
+    }
+
+    if (!encontrado) {
+        printf("Playlist não encontrada.\n \n");
+    }
+}

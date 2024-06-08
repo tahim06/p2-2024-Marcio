@@ -64,6 +64,8 @@ void consultarUsuarios_porParteNome(struct Usuario usuario[], int qtdUsuarios);
 void listarPlaylists_do_Usuario(struct Usuario usuario[], int posicaoUsuario, struct Musica musicas[], int qtdMusicas);
 void listarTodasPlaylistsExcetoUsuario(struct Usuario usuario[], int posicaoUsuario, int qtdUsuarios, struct Musica musicas[], int qtdMusicas);
 void consultarPlaylists(struct Usuario usuario[], int posicaoUsuario, int qtdUsuarios, struct Musica musicas[], int qtdMusicas);
+void inserirMusicaPlaylist(struct Usuario usuario[], int posicaoUsuario, int qtdUsuarios, struct Musica musicas[], int qtdMusicas);
+
 
 int main()
 {
@@ -1236,3 +1238,73 @@ void consultarPlaylists(struct Usuario usuario[], int posicaoUsuario, int qtdUsu
         printf("Playlist não encontrada.\n \n");
     }
 }
+
+void inserirMusicaPlaylist(struct Usuario usuario[], int posicaoUsuario, int qtdUsuarios, struct Musica musicas[], int qtdMusicas) {
+    int codigoPlaylist;
+
+    printf("Digite o código da playlist para inserir músicas:\n");
+    scanf("%d", &codigoPlaylist);
+    while (getchar() != '\n');
+
+    int indicePlaylist = buscarIndicePlaylist(usuario, posicaoUsuario, codigoPlaylist);
+    if (indicePlaylist == -1) {
+        printf("Playlist não encontrada ou não pertence a você.\n");
+        return;
+    }
+
+    int qtdMusicasPlaylist = usuario[posicaoUsuario].playlists[indicePlaylist].qtdMusicas;
+
+    if (qtdMusicasPlaylist >= TAM_MUSICAS) {
+        printf("Você atingiu o limite máximo de músicas na playlist.\n");
+        return;
+    }
+
+    int codigoMusica;
+    do {
+        printf("Informe o código da música a ser adicionada (0 para sair):\n");
+        scanf("%d", &codigoMusica);
+        while (getchar() != '\n');
+
+        if (codigoMusica == 0) {
+            break;
+        }
+
+        int indiceMusica = buscarIndiceMusica(musicas, qtdMusicas, codigoMusica);
+        if (indiceMusica == -1) {
+            printf("Música não encontrada.\n");
+        } else {
+            usuario[posicaoUsuario].playlists[indicePlaylist].musicas[qtdMusicasPlaylist++] = codigoMusica;
+            printf("Música adicionada à playlist.\n");
+        }
+
+        if (qtdMusicasPlaylist >= TAM_MUSICAS) {
+            printf("Você atingiu o limite máximo de músicas na playlist.\n");
+            break;
+        }
+    } while (1);
+
+    usuario[posicaoUsuario].playlists[indicePlaylist].qtdMusicas = qtdMusicasPlaylist;
+}
+
+void cadastrarPlaylist(struct Usuario usuario[], int posicaoUsuario, int qtdUsuarios, struct Musica musicas[], int *qtdMusicas) {
+    if (usuario[posicaoUsuario].qtdPlaylists >= TAM_PLAYLIST) {
+        printf("Você atingiu o limite máximo de playlists que pode criar.\n");
+        return;
+    }
+
+    int codigoPlaylist = *qtdMusicas + 1;
+
+    printf("Digite o título da playlist:\n");
+    lerString(usuario[posicaoUsuario].playlists[usuario[posicaoUsuario].qtdPlaylists].titulo, TAM_TITULO);
+
+    inserirMusicaPlaylist(usuario, posicaoUsuario,qtdUsuarios,musicas,&qtdMusicas);
+
+    usuario[posicaoUsuario].playlists[usuario[posicaoUsuario].qtdPlaylists].codigo = codigoPlaylist;
+
+    usuario[posicaoUsuario].qtdPlaylists++;
+
+    *qtdMusicas += 1;
+
+    printf("Playlist cadastrada com sucesso.\n");
+}
+

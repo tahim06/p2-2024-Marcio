@@ -1248,7 +1248,6 @@ void consultarPlaylists(struct Usuario usuario[], int posicaoUsuario, int qtdUsu
             for (int j = 0; j < usuario[i].qtdPlaylists; j++) {
                 for (int k = 0; k < usuario[i].playlists[j].qtdMusicas; k++) {
                     if (usuario[i].playlists[j].musicas[k] == codigoMusica) {
- 
                         encontrado = 1;
                     }
                 }
@@ -1291,7 +1290,7 @@ void inserirMusicaPlaylist(struct Usuario usuario[], int posicaoUsuario, int qtd
             break;
         }
 
-        int indiceMusica = buscarIndiceMusica(musicas, qtdMusicas, codigoMusica);
+        int indiceMusica;
         if (indiceMusica == -1) {
             printf("Música não encontrada.\n");
         } else {

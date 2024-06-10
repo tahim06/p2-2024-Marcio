@@ -1267,13 +1267,9 @@ void inserirMusicaPlaylist(struct Usuario usuario[], int posicaoUsuario, int qtd
     scanf("%d", &codigoPlaylist);
     while (getchar() != '\n');
 
-    int indicePlaylist;
-    if (indicePlaylist == -1) {
-        printf("Playlist não encontrada ou não pertence a você.\n");
-        return;
-    }
 
-    int qtdMusicasPlaylist = usuario[posicaoUsuario].playlists[indicePlaylist].qtdMusicas;
+
+    int qtdMusicasPlaylist = usuario[posicaoUsuario].playlists[codigoPlaylist].qtdMusicas;
 
     if (qtdMusicasPlaylist >= TAM_MUSICAS) {
         printf("Você atingiu o limite máximo de músicas na playlist.\n");
@@ -1294,7 +1290,7 @@ void inserirMusicaPlaylist(struct Usuario usuario[], int posicaoUsuario, int qtd
         if (indiceMusica == -1) {
             printf("Música não encontrada.\n");
         } else {
-            usuario[posicaoUsuario].playlists[indicePlaylist].musicas[qtdMusicasPlaylist++] = codigoMusica;
+            usuario[posicaoUsuario].playlists[codigoPlaylist].musicas[qtdMusicasPlaylist++] = codigoMusica;
             printf("Música adicionada à playlist.\n");
         }
 
@@ -1304,7 +1300,7 @@ void inserirMusicaPlaylist(struct Usuario usuario[], int posicaoUsuario, int qtd
         }
     } while (1);
 
-    usuario[posicaoUsuario].playlists[indicePlaylist].qtdMusicas = qtdMusicasPlaylist;
+    usuario[posicaoUsuario].playlists[codigoPlaylist].qtdMusicas = qtdMusicasPlaylist;
 }
 
 void cadastrarPlaylist(struct Usuario usuario[], int posicaoUsuario, int qtdUsuarios, struct Musica musicas[],int *ultimoCodigo, int qtdMusicas) {

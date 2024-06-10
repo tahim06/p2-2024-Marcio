@@ -1221,7 +1221,6 @@ void consultarPlaylists(struct Usuario usuario[], int posicaoUsuario, int qtdUsu
         for (int i = 0; i < qtdUsuarios; i++) {
             for (int j = 0; j < usuario[i].qtdPlaylists; j++) {
                 if (usuario[i].playlists[j].codigo == codigo) {
-                    listarPlaylist(usuario[i].playlists[j], usuario[i].nome, musicas, qtdMusicas);
                     encontrado = 1;
                     break;
                 }
@@ -1270,7 +1269,7 @@ void inserirMusicaPlaylist(struct Usuario usuario[], int posicaoUsuario, int qtd
     scanf("%d", &codigoPlaylist);
     while (getchar() != '\n');
 
-    int indicePlaylist = buscarIndicePlaylist(usuario, posicaoUsuario, codigoPlaylist);
+    int indicePlaylist;
     if (indicePlaylist == -1) {
         printf("Playlist não encontrada ou não pertence a você.\n");
         return;

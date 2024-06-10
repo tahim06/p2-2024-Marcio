@@ -1234,7 +1234,6 @@ void consultarPlaylists(struct Usuario usuario[], int posicaoUsuario, int qtdUsu
         for (int i = 0; i < qtdUsuarios; i++) {
             for (int j = 0; j < usuario[i].qtdPlaylists; j++) {
                 if (strstr(usuario[i].playlists[j].titulo, parteTitulo) != NULL) {
-                    listarPlaylist(usuario[i].playlists[j], usuario[i].nome, musicas, qtdMusicas);
                     encontrado = 1;
                 }
             }
